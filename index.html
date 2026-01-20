@@ -186,6 +186,34 @@ fetch(apiUrl)
     function renderTable(filter="") {
       
       table.innerHTML = "";
+      data.forEach(item => {
+  const stock = item.Stock || 0;
+
+  const msg = encodeURIComponent(
+    `Hi, I want this product:\n${item.ProductName}`
+  );
+
+  const waLink = `https://wa.me/${whatsappNumber}?text=${msg}`;
+
+  table.innerHTML += `
+    <tr>
+      <td>${item.ProductName}</td>
+      <td>${stock}</td>
+      <td>
+        <a href="${waLink}" target="_blank"
+          style="
+            background:#25D366;
+            color:white;
+            padding:6px 10px;
+            border-radius:4px;
+            text-decoration:none;
+          ">
+          WhatsApp
+        </a>
+      </td>
+    </tr>
+  `;
+});
       <a href="${waLink}" target="_blank"
    style="
      display:inline-block;
@@ -199,6 +227,7 @@ fetch(apiUrl)
    ">
    WhatsApp
 </a>
+      
 
     search.addEventListener("input", e => renderTable(e.target.value));
     renderTable();
