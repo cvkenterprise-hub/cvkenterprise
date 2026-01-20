@@ -1,81 +1,83 @@
 <!DOCTYPE html>
-<html lang="te">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>CVK ENTERPRISE</title>
+  <meta charset="UTF-8">
+  <title>CVK ENTERPRISE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f4f6f8;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
 
-header {
-  background: #0b5ed7;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
+    header {
+      background: #0b4fd8;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
 
-section {
-  padding: 20px;
-}
+    section {
+      padding: 15px;
+      background: white;
+      margin: 10px;
+      border-radius: 5px;
+    }
 
-h2 {
-  color: #0b5ed7;
-}
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
 
-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-}
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+      font-size: 14px;
+    }
 
-th, td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-}
+    th {
+      background: #eee;
+    }
 
-th {
-  background: #eee;
-}
+    .wa-btn {
+      background: #25D366;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 13px;
+    }
 
-.whatsapp-btn {
-  background: #25D366;
-  color: white;
-  padding: 6px 10px;
-  text-decoration: none;
-  border-radius: 4px;
-  font-size: 13px;
-}
-
-footer {
-  background: #333;
-  color: white;
-  text-align: center;
-  padding: 15px;
-  margin-top: 30px;
-}
-</style>
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-  <h1>CVK ENTERPRISE</h1>
+  <h2>CVK ENTERPRISE</h2>
   <p>Bike Spare Parts – Andhra Pradesh</p>
 </header>
 
 <section>
-  <h2>Available Stock</h2>
+  <h3>Available Stock</h3>
 
   <input type="text" id="search" placeholder="Search product...">
 
@@ -88,13 +90,13 @@ footer {
       </tr>
     </thead>
     <tbody id="stockTable">
-      <!-- Data will come from Google Sheet -->
+      <!-- DATA WILL COME HERE -->
     </tbody>
   </table>
 </section>
 
 <section>
-  <h2>Contact</h2>
+  <h3>Contact</h3>
   <p>📍 గోపాలపట్నం, విశాఖపట్నం</p>
   <p>📞 9642162599</p>
 </section>
@@ -108,57 +110,50 @@ footer {
 </footer>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
-const WHATSAPP = "9642162599";
+  const API_URL = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
+  const WHATSAPP = "919642162599";
 
-let allData = [];
+  const tableBody = document.getElementById("stockTable");
+  const searchBox = document.getElementById("search");
 
-fetch(API_URL)
-  .then(res => res.json())
-  .then(data => {
-    allData = data;
-    renderTable("");
-  })
-  .catch(err => {
-    alert("❌ Google Sheet డేటా రాలేదు");
-    console.error(err);
+  let allData = [];
+
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(data => {
+      allData = data;
+      renderTable("");
+    });
+
+  function renderTable(filter) {
+    tableBody.innerHTML = "";
+
+    allData.forEach(item => {
+      const stock = parseFloat(item.Stock);
+
+      if (isNaN(stock) || stock <= 0) return;
+      if (!item.ProductName.toLowerCase().includes(filter.toLowerCase())) return;
+
+      const msg = encodeURIComponent(
+        "Hi, I want this product:\n" +
+        item.ProductName + "\nStock: " + stock
+      );
+
+      const waLink = https://wa.me/${WHATSAPP}?text=${msg};
+
+      tableBody.innerHTML += `
+        <tr>
+          <td>${item.ProductName}</td>
+          <td>${stock}</td>
+          <td><a class="wa-btn" href="${waLink}" target="_blank">WhatsApp</a></td>
+        </tr>
+      `;
+    });
+  }
+
+  searchBox.addEventListener("keyup", e => {
+    renderTable(e.target.value);
   });
-
-function renderTable(filter) {
-  const tbody = document.getElementById("stockTable");
-  tbody.innerHTML = "";
-
-  allData.forEach(item => {
-    const stock = parseFloat(item.Stock);
-    if (isNaN(stock) || stock <= 0) return;
-
-    if (
-      filter &&
-      !item.ProductName.toLowerCase().includes(filter.toLowerCase())
-    ) return;
-
-    const msg = encodeURIComponent(
-      "Hi, I want this product:\n" + item.ProductName
-    );
-
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${item.ProductName}</td>
-      <td>${stock}</td>
-      <td>
-        <a class="whatsapp-btn" target="_blank"
-           href="https://wa.me/${WHATSAPP}?text=${msg}">
-           WhatsApp
-        </a>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-document.getElementById("search").addEventListener("input", e => {
-  renderTable(e.target.value);
-});
 </script>
 
 </body>
