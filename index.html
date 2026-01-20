@@ -184,19 +184,21 @@ fetch(apiUrl)
     const search = document.getElementById("search");
 
     function renderTable(filter="") {
+      
       table.innerHTML = "";
-      data
-        .filter(item => item.ProductName.toLowerCase().includes(filter.toLowerCase()))
-        .forEach(item => {
-          table.innerHTML += `
-            <tr>
-              <td>${item.ProductName}</td>
-              <td>${item.Stock}</td>
-              <td>${item.Price || "-"}</td>
-            </tr>
-          `;
-        });
-    }
+      <a href="${waLink}" target="_blank"
+   style="
+     display:inline-block;
+     background:#25D366;
+     color:white;
+     padding:6px 10px;
+     border-radius:4px;
+     text-decoration:none;
+     font-size:14px;
+     white-space:nowrap;
+   ">
+   WhatsApp
+</a>
 
     search.addEventListener("input", e => renderTable(e.target.value));
     renderTable();
