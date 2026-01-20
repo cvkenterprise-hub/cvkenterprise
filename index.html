@@ -86,19 +86,13 @@
 <!-- ✅ PRODUCTS SECTION -->
 <section>
   <h2>మా ఉత్పత్తులు (Products)</h2>
-  <ul>
-    <table border="1" width="100%">
-  <thead>
+  <ul
     <tr>
       <th>Product Name</th>
       <th>Stock</th>
     </tr>
   </thead>
 
-  <tbody id="stockTable">
-    <!-- JS will insert rows here -->
-  </tbody>
-</table>
     <li>Engine Parts</li>
     <li>Brake Parts</li>
     <li>Clutch Plates</li>
@@ -110,7 +104,26 @@
   </ul>
 <h2 style="text-align:center;">Available Stock</h2>
 
+<input
+  type="text"
+  id="search"
+  placeholder="Search product..."
+  style="width:100%; padding:8px; margin-bottom:10px;"
+>
 
+<table border="1" width="100%" cellpadding="6">
+  <thead style="background:#eee;">
+    <tr>
+      <th>Product Name</th>
+      <th>Stock</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody id="stockTable">
+    <!-- JavaScript will insert rows here -->
+  </tbody>
+</table>
 
   <tbody id="stockTable">
     <!-- JavaScript data will come here -->
@@ -226,12 +239,16 @@ fetch(apiUrl)
     const tableBody = document.getelementById("stockTable");
     const search = document.getElementById("search");
 
-    function renderTable(filter="") {
-      
+    function renderTable(filter="") { 
       table.innerHTML = "";
-      data.forEach(item => {
+      
+      data
+        .forEach(item => 
+          Item.ProductName.toLowerCase().includes(filter.tolowercases()}
+    )
+          .forEach(item => 
   const stock = item.Stock || 0;
-
+      
   const msg = encodeURIComponent(
     `Hi, I want this product:\n${item.ProductName}`
   );
@@ -257,6 +274,14 @@ fetch(apiUrl)
     </tr>
   `;
 });
+  }
+        render Table();
+
+   search.addEventListener("keyup", e => {
+      renderTable(e.target.value);
+    });
+  });
+</script>
       <a href="${waLink}" target="_blank"
    style="
      display:inline-block;
@@ -271,7 +296,6 @@ fetch(apiUrl)
    WhatsApp
 </a>
       
-
     search.addEventListener("input", e => renderTable(e.target.value));
     renderTable();
   });
