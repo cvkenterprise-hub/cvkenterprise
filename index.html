@@ -111,10 +111,6 @@
   </thead>
   <tbody id="stockTable"></tbody>
 </table>
-  <a class="btn"
-     href="https://wa.me/919642162599?text=Hello%20CVK%20Enterprise,%20I%20want%20bike%20spare%20parts">
-     WhatsApp for Price
-  </a>
 </section>
 
 <section>
@@ -219,68 +215,44 @@ fetch(apiUrl)
     function renderTable(filter = "") {
       table.innerHTML = "";
 
-      data
-        // 🔴 Stock = 0 hide
-        .filter(item => parseFloat(item.Stock) > 0)
+      data.forEach(item => {
+        const stock = parseFloat(item.Stock);
+
+        // ❌ Stock 0 లేదా minus అయితే hide
+        if (isNaN(stock) || stock <= 0) return;
+
         // 🔍 Search filter
-        .filter(item =>
-          item.ProductName.toLowerCase().includes(filter.toLowerCase())
-        )
-        .forEach(item => {
-          const msg = encodeURIComponent(
-            Hi, I want this product:\n${item.ProductName}
-          );
+        if (
+          filter &&
+          !item.ProductName.toLowerCase().includes(filter.toLowerCase())
+        ) return;
 
-          const waLink = https://wa.me/${whatsappNumber}?text=${msg};
+        const msg = encodeURIComponent(
+          `Hi, I want this product:\n${item.ProductName}`
+        );
 
-          table.innerHTML += `
-            <tr>
-              <td>${item.ProductName}</td>
-              <td>${item.Stock}</td>
-              <td>
-                <a href="${waLink}" target="_blank"
-                   style="
-                     background:#25D366;
-                     color:#fff;
-                     padding:6px 10px;
-                     text-decoration:none;
-                     border-radius:4px;
-                     font-size:14px;
-                   ">
-                  WhatsApp
-                </a>
-              </td>
-            </tr>
-          `;
-        });
-    }
+        const waLink = `https://wa.me/${whatsappNumber}?text=${msg}`;
 
-    search.addEventListener("input", e => renderTable(e.target.value));
-    renderTable();
-  });
-</script>
-  <script>
-const apiUrl = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
-
-fetch(apiUrl)
-  .then(res => res.json())
-  .then(data => {
-    const table = document.getElementById("stockTable");
-    const search = document.getElementById("search");
-
-    function renderTable(filter="") {
-      table.innerHTML = "";
-      data
-        .filter(item => item.ProductName.toLowerCase().includes(filter.toLowerCase()))
-        .forEach(item => {
-          table.innerHTML += `
-            <tr>
-              <td>${item.ProductName}</td>
-              <td>${item.Stock}</td>
-              <td>${item.Price || "-"}</td>
-            </tr>
-          `;
-        });
+        table.innerHTML += `
+          <tr>
+            <td>${item.ProductName}</td>
+            <td>${stock}</td>
+            <td>
+              <a href="${waLink}" target="_blank"
+                 style="
+                   background:#25D366;
+                   color:#fff;
+                   padding:6px 10px;
+                   text-decoration:none;
+                   border-radius:4px;
+                   font-size:14px;
+                 ">
+                WhatsApp
+              </a>
+            </td>
+          </tr>
+        `;
+      });
     }
 
     search.addEventListener("input", e => renderTable(e.target.value));
