@@ -1,76 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>CVK ENTERPRISE</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>CVK ENTERPRISE</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f4f4;
-      color: #333;
-    }
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
 
-    header {
-      background: #0b5ed7;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
+header {
+  background: #1e5ed8;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
 
-    section {
-      background: white;
-      margin: 15px;
-      padding: 20px;
-      border-radius: 10px;
-    }
+section {
+  padding: 20px;
+}
 
-    h2 {
-      margin-top: 0;
-      color: #0b5ed7;
-    }
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-size: 16px;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
 
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
-    }
+th {
+  background: #f0f0f0;
+}
 
-    th {
-      background: #eee;
-    }
+footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
 
-    .wa-btn {
-      background: #25D366;
-      color: white;
-      padding: 6px 10px;
-      border-radius: 4px;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 20px;
-    }
-  </style>
+.whatsapp-btn {
+  background: #25D366;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+</style>
 </head>
 
 <body>
@@ -83,11 +68,7 @@
 <section>
   <h2>Available Stock</h2>
 
-  <input
-    type="text"
-    id="search"
-    placeholder="Search product..."
-  >
+  <input type="text" id="search" placeholder="Search product...">
 
   <table>
     <thead>
@@ -98,7 +79,7 @@
       </tr>
     </thead>
     <tbody id="stockTable">
-      <!-- JS will insert rows -->
+      <!-- JS inserts data -->
     </tbody>
   </table>
 </section>
@@ -118,56 +99,55 @@
 </footer>
 
 <script>
-  const apiUrl = https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
-  const whatsappNumber = "919642162599";
+const apiUrl = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
+const whatsappNumber = "919642162599";
 
-  const tableBody = document.getElementById("stockTable");
-  const searchInput = document.getElementById("search");
+fetch(apiUrl)
+  .then(res => res.json())
+  .then(data => {
+    const tableBody = document.getElementById("stockTable");
+    const search = document.getElementById("search");
 
-  fetch(apiUrl)
-    .then(res => res.json())
-    .then(data => {
+    function renderTable(filter = "") {
+      tableBody.innerHTML = "";
 
-      function renderTable(filter = "") {
-        tableBody.innerHTML = "";
+      data.forEach(item => {
+        const stock = parseFloat(item.Stock);
+        if (isNaN(stock) || stock <= 0) return;
 
-        data.forEach(item => {
-          const stock = parseFloat(item.Stock);
+        if (!item.ProductName.toLowerCase().includes(filter.toLowerCase())) return;
 
-          if (isNaN(stock) || stock <= 0) return;
+        const msg = encodeURIComponent(
+          "Hi, I want this product:\n" +
+          item.ProductName +
+          "\nStock: " + stock
+        );
 
-          if (
-            filter &&
-            !item.ProductName.toLowerCase().includes(filter.toLowerCase())
-          ) return;
+        const waLink = https://wa.me/${whatsappNumber}?text=${msg};
 
-          const msg = encodeURIComponent(
-            Hi, I want this product:\n${item.ProductName}\nStock: ${stock}
-          );
-
-          const waLink = https://wa.me/${whatsappNumber}?text=${msg};
-
-          tableBody.innerHTML += `
-            <tr>
-              <td>${item.ProductName}</td>
-              <td>${stock}</td>
-              <td>
-                <a class="wa-btn" href="${waLink}" target="_blank">
-                  WhatsApp
-                </a>
-              </td>
-            </tr>
-          `;
-        });
-      }
-
-      renderTable();
-
-      searchInput.addEventListener("input", e => {
-        renderTable(e.target.value);
+        tableBody.innerHTML += `
+          <tr>
+            <td>${item.ProductName}</td>
+            <td>${stock}</td>
+            <td>
+              <a class="whatsapp-btn" href="${waLink}" target="_blank">
+                WhatsApp
+              </a>
+            </td>
+          </tr>
+        `;
       });
+    }
 
+    renderTable();
+
+    search.addEventListener("keyup", e => {
+      renderTable(e.target.value);
     });
+  })
+  .catch(err => {
+    console.error("Data load error:", err);
+  });
 </script>
 
 </body>
