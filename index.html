@@ -113,6 +113,19 @@
 </table>
 </section>
 
+  <h3>Place Order</h3>
+
+<form onsubmit="sendOrder(); return false;">
+  <input type="text" id="custName" placeholder="Customer Name" required><br><br>
+  <input type="tel" id="custPhone" placeholder="Mobile Number" required><br><br>
+  <input type="text" id="custProduct" placeholder="Product Name" required><br><br>
+  <textarea id="custMsg" placeholder="Message (optional)"></textarea><br><br>
+
+  <button type="submit"
+    style="background:#25D366;color:white;padding:10px 20px;border:none;">
+    Order on WhatsApp
+  </button>
+</form>
 <section>
   <h2>Payment Options</h2>
   <ul>
