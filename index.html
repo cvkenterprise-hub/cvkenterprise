@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="te">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>CVK ENTERPRISE</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
@@ -20,15 +20,6 @@
       padding: 20px;
     }
 
-    .logo {
-      width: 120px;
-      display: block;
-      margin: 0 auto 10px;
-      background: white;
-      border-radius: 10px;
-      padding: 6px;
-    }
-
     section {
       background: white;
       margin: 15px;
@@ -37,23 +28,39 @@
     }
 
     h2 {
-      color: #0b5ed7;
       margin-top: 0;
+      color: #0b5ed7;
     }
 
-    ul {
-      padding-left: 20px;
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
     }
 
-    .btn {
-      display: inline-block;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background: #eee;
+    }
+
+    .wa-btn {
       background: #25D366;
       color: white;
-      padding: 12px 20px;
+      padding: 6px 10px;
+      border-radius: 4px;
       text-decoration: none;
-      border-radius: 6px;
-      margin-top: 10px;
-      font-weight: bold;
+      font-size: 14px;
     }
 
     footer {
@@ -69,148 +76,31 @@
 <body>
 
 <header>
-  <img src="logo.png" class="logo" alt="CVK Enterprise Logo">
   <h1>CVK ENTERPRISE</h1>
   <p>Bike Spare Parts – Andhra Pradesh</p>
 </header>
 
 <section>
-  <h2>మా గురించి</h2>
-  <p>
-    CVK ENTERPRISE లో అన్ని రకాల బైక్ స్పేర్ పార్ట్స్
-    Wholesale & Retail లో అందుబాటులో ఉన్నాయి.
-    నాణ్యమైన భాగాలు,  మా ప్రత్యేకత.
-  </p>
-</section>
+  <h2>Available Stock</h2>
 
-<!-- ✅ PRODUCTS SECTION -->
-<section>
-  <h2>మా ఉత్పత్తులు (Products)</h2>
-  <ul
-    <tr>
-      <th>Product Name</th>
-      <th>Stock</th>
-    </tr>
-  </thead>
+  <input
+    type="text"
+    id="search"
+    placeholder="Search product..."
+  >
 
-    <li>Engine Parts</li>
-    <li>Brake Parts</li>
-    <li>Clutch Plates</li>
-    <li>Chain Sprocket Sets</li>
-    <li>Electrical Parts</li>
-    <li>Lights & Indicators</li>
-    <li>Oil / Air / Fuel Filters</li>
-    <li>All Two-Wheeler Spare Parts</li>
-  </ul>
-<h2 style="text-align:center;">Available Stock</h2>
-
-<input
-  type="text"
-  id="search"
-  placeholder="Search product..."
-  style="width:100%; padding:8px; margin-bottom:10px;"
->
-
-<table border="1" width="100%" cellpadding="6">
-  <thead style="background:#eee;">
-    <tr>
-      <th>Product Name</th>
-      <th>Stock</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-
-  <tbody id="stockTable">
-    <!-- JavaScript will insert rows here -->
-  </tbody>
-</table>
-
-  <tbody id="stockTable">
-    <!-- JavaScript data will come here -->
-  </tbody>
-</table>
-<input type="text" id="search" placeholder="Search product..."
-       style="width:100%;padding:8px;margin-bottom:10px;">
-  <table border="1" width="100%">
-  <thead>
-    <tr>
-      <th>Product Name</th>
-      <th>Stock</th>
-    </tr>
-  </thead>
-
-  <tbody id="stockTable">
-    <!-- Stock data will come here -->
-  </tbody>
-</table>
-
-<table border="1" width="100%" cellpadding="6">
-  <thead style="background:#eee;">
-    <tr>
-      <th>Product Name</th>
-      <th>Stock</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody id="stockTable"></tbody>
-</table>
-</section>
-
-  <h3>Place Order</h3>
-
-<form onsubmit="sendOrder(); return false;">
-  <input type="text" id="custName" placeholder="Customer Name" required><br><br>
-  <input type="tel" id="custPhone" placeholder="Mobile Number" required><br><br>
-  <input type="text" id="custProduct" placeholder="Product Name" required><br><br>
-  <textarea id="custMsg" placeholder="Message (optional)"></textarea><br><br>
-
-  <button type="submit"
-    style="background:#25D366;color:white;padding:10px 20px;border:none;">
-    Order on WhatsApp
-  </button>
-</form>
-<section>
-  <h2>Payment Options</h2>
-  <ul>
-    <li>UPI</li>
-    <li>Cash on Delivery (COD)</li>
-    <li>Credit (Selected Customers)</li>
-  </ul>
-</section>
-
-  <section>
-  <h2>ఆన్‌లైన్ ఆర్డర్ ఫారం</h2>
-
-  <form action="https://formsubmit.co/cvkenterprise.ho@gmail.com"
-        method="POST">
-
-    <input type="hidden" name="_captcha" value="false">
-
-    <p>
-      <input type="text" name="name"
-             placeholder="మీ పేరు"
-             required
-             style="width:100%;padding:10px;">
-    </p>
-
-    <p>
-      <input type="tel" name="phone"
-             placeholder="మొబైల్ నెంబర్"
-             required
-             style="width:100%;padding:10px;">
-    </p>
-
-    <p>
-      <textarea name="product"
-                placeholder="ఏ ప్రొడక్ట్ కావాలో రాయండి"
-                required
-                style="width:100%;padding:10px;"></textarea>
-    </p>
-
-    <button class="btn" type="submit">
-      Order Submit
-    </button>
-  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>Stock</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="stockTable">
+      <!-- JS will insert rows -->
+    </tbody>
+  </table>
 </section>
 
 <section>
@@ -221,205 +111,64 @@
 
 <footer>
   <p><b>CVK ENTERPRISE</b></p>
-  <p>Chinnayyamma Veni Kala Enterprise</p>
+  <p>Chinnayamma Veni Kala Enterprise</p>
   <p>GSTIN: 37ADSPN1867H1ZY</p>
   <p>Timings: 10:00 AM – 6:00 PM</p>
   <p>Delivery: All over Andhra Pradesh</p>
-  <p>© 2026 CVK ENTERPRISE</p>
 </footer>
 
-</body>
- <script>
-const apiUrl = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
-const whatsappNumber ="9642162599";
+<script>
+  const apiUrl = https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
+  const whatsappNumber = "919642162599";
 
-fetch(apiUrl)
-  .then(res => res.json())
-  .then(data => {
-    const tableBody = document.getelementById("stockTable");
-    const search = document.getElementById("search");
+  const tableBody = document.getElementById("stockTable");
+  const searchInput = document.getElementById("search");
 
-    function renderTable(filter="") { 
-      table.innerHTML = "";
-      
-      data
-        .forEach(item => 
-          Item.ProductName.toLowerCase().includes(filter.tolowercases()}
-    )
-          .forEach(item => 
-  const stock = item.Stock || 0;
-      
-  const msg = encodeURIComponent(
-    `Hi, I want this product:\n${item.ProductName}`
-  );
+  fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
 
-  const waLink = `https://wa.me/${919642162599}?text=${msg}`;
+      function renderTable(filter = "") {
+        tableBody.innerHTML = "";
 
-  table.innerHTML += `
-    <tr>
-      <td>${item.ProductName}</td>
-      <td>${stock}</td>
-      <td>
-        <a href="${waLink}" target="_blank"
-          style="
-            background:#25D366;
-            color:white;
-            padding:6px 10px;
-            border-radius:4px;
-            text-decoration:none;
-          ">
-          WhatsApp
-        </a>
-      </td>
-    </tr>
-  `;
-});
-  }
-        render Table();
+        data.forEach(item => {
+          const stock = parseFloat(item.Stock);
 
-   search.addEventListener("keyup", e => {
-      renderTable(e.target.value);
-    });
-  });
-</script>
-      <a href="${waLink}" target="_blank"
-   style="
-     display:inline-block;
-     background:#25D366;
-     color:white;
-     padding:6px 10px;
-     border-radius:4px;
-     text-decoration:none;
-     font-size:14px;
-     white-space:nowrap;
-   ">
-   WhatsApp
-</a>
-      
-    search.addEventListener("input", e => renderTable(e.target.value));
-    renderTable();
-  });
-</script>
-  <script>
-function sendOrder() {
-  var name = document.getElementById("custName").value;
-  var phone = document.getElementById("custPhone").value;
-  var product = document.getElementById("custProduct").value;
-  var msg = document.getElementById("custMsg").value;
+          if (isNaN(stock) || stock <= 0) return;
 
-  var text =
-    "New Order from CVK ENTERPRISE App\n" +
-    "Name: " + name + "\n" +
-    "Mobile: " + phone + "\n" +
-    "Product: " + product + "\n" +
-    "Message: " + msg;
+          if (
+            filter &&
+            !item.ProductName.toLowerCase().includes(filter.toLowerCase())
+          ) return;
 
-  var url =
-    "https://wa.me/919642162599?text=" +
-    encodeURIComponent(text);
+          const msg = encodeURIComponent(
+            Hi, I want this product:\n${item.ProductName}\nStock: ${stock}
+          );
 
-  window.open(url, "_blank");
-}
-</script>
- <script>
-const apiUrl = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
-const whatsappNumber = "919642162599"; 
+          const waLink = https://wa.me/${whatsappNumber}?text=${msg};
 
-fetch(apiUrl)
-  .then(res => res.json())
-  .then(data => {
-    
-    const table = document.getElementById("stockTable");
-    const search = document.getElementById("search");
+          tableBody.innerHTML += `
+            <tr>
+              <td>${item.ProductName}</td>
+              <td>${stock}</td>
+              <td>
+                <a class="wa-btn" href="${waLink}" target="_blank">
+                  WhatsApp
+                </a>
+              </td>
+            </tr>
+          `;
+        });
+      }
 
-    tableBody.innerHTML += `
-<tr>
-  <td>${item.ProductName}</td>
-  <td>${item.Stock}</td>
-</tr>
-`;
-  }):
+      renderTable();
 
-   }):
-    function renderTable(filter = "") {
-      table.innerHTML = "";
-
-      data.forEach(item => {
-        const stock = parseFloat(item.Stock);
-
-        // ❌ Stock 0 లేదా minus అయితే hide
-        if (isNaN(stock) || stock <= 0) return;
-
-        // 🔍 Search filter
-        if (
-          filter &&
-          !item.ProductName.toLowerCase().includes(filter.toLowerCase())
-        ) return;
-
-        const msg = encodeURIComponent(
-          `Hi, I want this product:\n${item.ProductName}`
-        );
-
-        const waLink = `https://wa.me/${919642162599}?text=${msg}`;
-
-        table.innerHTML += `
-          <tr>
-            <td>${item.ProductName}</td>
-            <td>${stock}</td>
-            <td>
-              <a href="${waLink}" target="_blank"
-   style="
-    
- </a>
-</td>
-                   
-          </tr>
-        `;
+      searchInput.addEventListener("input", e => {
+        renderTable(e.target.value);
       });
-    }
 
-    search.addEventListener("input", e => renderTable(e.target.value));
-    renderTable();
-  });
-   <hr>
-
-<h3>Place Order</h3>
-
-<form onsubmit="sendOrder(); return false;">
-  <input type="text" id="custName" placeholder="Customer Name" required><br><br>
-  <input type="tel" id="custPhone" placeholder="Mobile Number" required><br><br>
-  <input type="text" id="custProduct" placeholder="Product Name" required><br><br>
-  <textarea id="custMsg" placeholder="Message (optional)"></textarea><br><br>
-
-  <button type="submit"
-    style="background:#25D366;color:white;padding:10px 20px;border:none;">
-    Order on WhatsApp
-  </button>
-</form>
+    });
 </script>
 
-  <!-- WhatsApp Floating Button -->
-<a href="https://wa.me/919642162599"
-   target="_blank"
-   style="
-   position:fixed;
-   bottom:20px;
-   right:20px;
-   width:60px;
-   height:60px;
-   background:#25D366;
-   color:white;
-   padding:12px 16px;
-   border-radius:50px;
-   display: flex;
-  align-items: center;
-  justify_content: center;
-  font-size: 14px;
-   text-decoration:none;
-   font-weight:bold;
-   z-index:99999;
-  box-shadow: 0 4px 10px rgba(0,0,0,0,3):
-    ">
-   WhatsApp
-</a>
+</body>
 </html>
