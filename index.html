@@ -217,7 +217,7 @@ const whatsappNumber ="9642162599";
 fetch(apiUrl)
   .then(res => res.json())
   .then(data => {
-    const table = document.getElementById("stockTable");
+    const tableBody = document.getelementById("stockTable");
     const search = document.getElementById("search");
 
     function renderTable(filter="") {
@@ -298,9 +298,19 @@ const whatsappNumber = "919642162599";
 fetch(apiUrl)
   .then(res => res.json())
   .then(data => {
+    
     const table = document.getElementById("stockTable");
     const search = document.getElementById("search");
 
+    tableBody.innerHTML += `
+<tr>
+  <td>${item.ProductName}</td>
+  <td>${item.Stock}</td>
+</tr>
+`;
+  }):
+
+   }):
     function renderTable(filter = "") {
       table.innerHTML = "";
 
