@@ -165,7 +165,7 @@
 
 <footer>
   <p><b>CVK ENTERPRISE</b></p>
-  <p>Legal Name: Chinnayyamma Veni Kala Enterprise</p>
+  <p>Chinnayyamma Veni Kala Enterprise</p>
   <p>GSTIN: 37ADSPN1867H1ZY</p>
   <p>Timings: 10:00 AM – 6:00 PM</p>
   <p>Delivery: All over Andhra Pradesh</p>
@@ -232,6 +232,27 @@ fetch(apiUrl)
     search.addEventListener("input", e => renderTable(e.target.value));
     renderTable();
   });
+</script>
+  <script>
+function sendOrder() {
+  var name = document.getElementById("custName").value;
+  var phone = document.getElementById("custPhone").value;
+  var product = document.getElementById("custProduct").value;
+  var msg = document.getElementById("custMsg").value;
+
+  var text =
+    "New Order from CVK ENTERPRISE App\n" +
+    "Name: " + name + "\n" +
+    "Mobile: " + phone + "\n" +
+    "Product: " + product + "\n" +
+    "Message: " + msg;
+
+  var url =
+    "https://wa.me/919642162599?text=" +
+    encodeURIComponent(text);
+
+  window.open(url, "_blank");
+}
 </script>
  <script>
 const apiUrl = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
