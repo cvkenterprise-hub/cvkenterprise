@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
 <meta charset="UTF-8">
 <title>CVK ENTERPRISE</title>
@@ -8,10 +8,11 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
+  background: #f4f6f8;
 }
 
 header {
-  background: #1e5ed8;
+  background: #0b5ed7;
   color: white;
   padding: 20px;
   text-align: center;
@@ -21,7 +22,11 @@ section {
   padding: 20px;
 }
 
-input[type="text"] {
+h2 {
+  color: #0b5ed7;
+}
+
+input {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -30,30 +35,34 @@ input[type="text"] {
 table {
   width: 100%;
   border-collapse: collapse;
+  background: white;
 }
 
 th, td {
   border: 1px solid #ccc;
   padding: 8px;
+  text-align: left;
 }
 
 th {
-  background: #f0f0f0;
-}
-
-footer {
-  background: #222;
-  color: white;
-  text-align: center;
-  padding: 15px;
+  background: #eee;
 }
 
 .whatsapp-btn {
   background: #25D366;
   color: white;
   padding: 6px 10px;
-  border-radius: 4px;
   text-decoration: none;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 30px;
 }
 </style>
 </head>
@@ -79,7 +88,7 @@ footer {
       </tr>
     </thead>
     <tbody id="stockTable">
-      <!-- JS inserts data -->
+      <!-- Data will come from Google Sheet -->
     </tbody>
   </table>
 </section>
@@ -99,55 +108,57 @@ footer {
 </footer>
 
 <script>
-const apiUrl = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
-const whatsappNumber = "919642162599";
+const API_URL = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
+const WHATSAPP = "9642162599";
 
-fetch(apiUrl)
+let allData = [];
+
+fetch(API_URL)
   .then(res => res.json())
   .then(data => {
-    const tableBody = document.getElementById("stockTable");
-    const search = document.getElementById("search");
-
-    function renderTable(filter = "") {
-      tableBody.innerHTML = "";
-
-      data.forEach(item => {
-        const stock = parseFloat(item.Stock);
-        if (isNaN(stock) || stock <= 0) return;
-
-        if (!item.ProductName.toLowerCase().includes(filter.toLowerCase())) return;
-
-        const msg = encodeURIComponent(
-          "Hi, I want this product:\n" +
-          item.ProductName +
-          "\nStock: " + stock
-        );
-
-        const waLink = https://wa.me/${whatsappNumber}?text=${msg};
-
-        tableBody.innerHTML += `
-          <tr>
-            <td>${item.ProductName}</td>
-            <td>${stock}</td>
-            <td>
-              <a class="whatsapp-btn" href="${waLink}" target="_blank">
-                WhatsApp
-              </a>
-            </td>
-          </tr>
-        `;
-      });
-    }
-
-    renderTable();
-
-    search.addEventListener("keyup", e => {
-      renderTable(e.target.value);
-    });
+    allData = data;
+    renderTable("");
   })
   .catch(err => {
-    console.error("Data load error:", err);
+    alert("❌ Google Sheet డేటా రాలేదు");
+    console.error(err);
   });
+
+function renderTable(filter) {
+  const tbody = document.getElementById("stockTable");
+  tbody.innerHTML = "";
+
+  allData.forEach(item => {
+    const stock = parseFloat(item.Stock);
+    if (isNaN(stock) || stock <= 0) return;
+
+    if (
+      filter &&
+      !item.ProductName.toLowerCase().includes(filter.toLowerCase())
+    ) return;
+
+    const msg = encodeURIComponent(
+      "Hi, I want this product:\n" + item.ProductName
+    );
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${item.ProductName}</td>
+      <td>${stock}</td>
+      <td>
+        <a class="whatsapp-btn" target="_blank"
+           href="https://wa.me/${WHATSAPP}?text=${msg}">
+           WhatsApp
+        </a>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById("search").addEventListener("input", e => {
+  renderTable(e.target.value);
+});
 </script>
 
 </body>
