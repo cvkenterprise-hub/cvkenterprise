@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JS TEST</title>
+</head>
+<body>
+
+<h2>JS Button Test</h2>
+
+<input id="prodName" placeholder="Product Name">
+<input id="prodQty" type="number" placeholder="Qty">
+
+<button onclick="addProduct()">Add Product</button>
+<button onclick="submitOrder()">Submit</button>
+
+<ul id="productList"></ul>
+
+<script>
+alert("JS LOADED");
+
+let products = [];
+
+function addProduct() {
+  alert("Add clicked");
+
+  const name = document.getElementById("prodName").value;
+  const qty  = document.getElementById("prodQty").value;
+
+  products.push({ name, qty });
+
+  document.getElementById("productList").innerHTML =
+    products.map(p => `<li>${p.name} - ${p.qty}</li>`).join("");
+}
+
+function submitOrder() {
+  alert("Submit clicked");
+}
+</script>
+
+</body>
+</html>
