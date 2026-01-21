@@ -19,10 +19,12 @@
 <input id="custName" placeholder="Customer Name"><br>
 <input id="custMobile" placeholder="Mobile Number"><br>
 
-<h3>Add Products</h3>
+<h2>Add Products</h2>
+
 <input id="prodName" placeholder="Product Name">
 <input id="prodQty" type="number" placeholder="Qty">
-<button onclick="addProduct()">➕ Add Product</button>
+
+<button type="button" onclick="addProduct()">➕ Add Product</button>
 
 <table>
   <thead>
@@ -35,7 +37,8 @@
 </table>
 
 <br>
-<button onclick="submitOrder()">✅ Submit Order</button>
+
+<button type="button" onclick="submitOrder()">✅ Submit Order</button>
 
 <script>
 const ORDER_API = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
