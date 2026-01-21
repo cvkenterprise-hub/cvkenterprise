@@ -2,172 +2,42 @@
 <html lang="te">
 <head>
   <meta charset="UTF-8">
-  <title>CVK ENTERPRISE</title>
-
+  <title>CVK ENTERPRISE – Order</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-    }
-
-    header {
-      background: linear-gradient(90deg,#0b4dbb,#0f6bdc);
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    header img {
-      height: 70px;
-      margin-bottom: 10px;
-    }
-
-    section {
-      padding: 20px;
-      background: white;
-      margin: 20px;
-      border-radius: 8px;
-    }
-
-    h2 {
-      margin-top: 0;
-      color: #0b4dbb;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-size: 16px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
-    }
-
-    th {
-      background: #eee;
-    }
-
-    .btn {
-      background: #25D366;
-      color: white;
-      padding: 6px 10px;
-      text-decoration: none;
-      border-radius: 4px;
-      font-size: 14px;
-    }
-
-    footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 30px;
-    }
+    body { font-family: Arial; padding: 20px; }
+    input, button { padding: 6px; margin: 4px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #aaa; padding: 6px; text-align: left; }
+    th { background: #f0f0f0; }
   </style>
 </head>
-
 <body>
 
-<header>
-  <img src="logo.png" alt="CVK ENTERPRISE">
-  <h1>CVK ENTERPRISE</h1>
-  <p>Bike Spare Parts – Andhra Pradesh</p>
-</header>
+<h2>CVK ENTERPRISE – Online Order</h2>
 
-<section>
-  <h2>Available Stock</h2>
+<h3>Customer Details</h3>
+<input id="custName" placeholder="Customer Name"><br>
+<input id="custMobile" placeholder="Mobile Number"><br>
 
-  <input type="text" id="search" placeholder="Search product...">
+<h3>Add Products</h3>
+<input id="prodName" placeholder="Product Name">
+<input id="prodQty" type="number" placeholder="Qty">
+<button onclick="addProduct()">➕ Add Product</button>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Product Name</th>
-        <th>Stock</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="stockTable">
-      <!-- data here -->
-    </tbody>
-  </table>
-</section>
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Qty</th>
+    </tr>
+  </thead>
+  <tbody id="productList"></tbody>
+</table>
 
- <section>
-  <h2>Online Order</h2>
+<br>
+<button onclick="submitOrder()">✅ Submit Order</button>
 
-  <input id="custName" placeholder="Your Name">
-  <input id="custMobile" placeholder="Mobile Number">
-
-  <hr>
-
-  <h3>Add Products</h3>
-
-  <input id="prodName" placeholder="Product Name">
-  <input id="prodQty" type="number" placeholder="Quantity">
-
-  <button onclick="addProduct()">➕ Add Product</button>
-
-  <ul id="productList"></ul>
-
-  <textarea id="custMsg"
-    placeholder="Address / Message"
-    style="width:100%;padding:10px;">
-  </textarea>
-
-  <button onclick="submitOrder()"
-    style="background:#0b5ed7;color:white;padding:10px;width:100%;">
-    Submit Order
-  </button>
-</section>
-
-<section>
-  <h2>Payment Details</h2>
-
-  <p><b>UPI ID:</b> <span id="upiId">YOURUPIID@upi</span></p>
-  <p>Payment చేసిన తర్వాత Screenshot WhatsApp లో పంపండి</p>
-
-  <!-- Optional QR -->
-  <!-- <img src="upi-qr.png" style="width:200px;"> -->
-</section>
-  
-<section>
-  <h2>మా గురించి</h2>
-  <p>
-    CVK ENTERPRISE గోపాలపట్నం, విశాఖపట్నం కేంద్రంగా  
-    అన్ని రకాల Bike Spare Parts విక్రయించబడును.
-  </p>
-  <p>
-    Engine Parts, Brake Parts, Electrical Items, Filters, Bearings  
-    మరియు అన్ని Two-Wheeler Spare Parts అందుబాటులో ఉన్నాయి.
-  </p>
-</section>
-
-<section>
-  <h2>Contact</h2>
-  <p>📍 గోపాలపట్నం, విశాఖపట్నం</p>
-  <p>📞 9642162599</p>
-</section>
-
-<footer>
-  <p><b>CVK ENTERPRISE</b></p>
-  <p>Chinnayamma Veni Kala Enterprise</p>
-  <p>GSTIN: 37ADSPN1867H1ZY</p>
-  <p>Timings: 10:00 AM – 6:00 PM</p>
-  <p>Delivery: All over Andhra Pradesh</p>
-</footer>
-
- <script>
+<script>
 const ORDER_API = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
 
 let products = [];
@@ -177,16 +47,14 @@ function addProduct() {
   const qty = document.getElementById("prodQty").value;
 
   if (!name || !qty) {
-    alert("Product name & quantity required");
+    alert("Product name & quantity ఇవ్వాలి");
     return;
   }
 
   products.push({ name, qty });
 
-  document.getElementById("productList").innerHTML =
-    products.map(
-      (p, i) => <li>${i+1}. ${p.name} - ${p.qty}</li>
-    ).join("");
+  const row = `<tr><td>${name}</td><td>${qty}</td></tr>`;
+  document.getElementById("productList").innerHTML += row;
 
   document.getElementById("prodName").value = "";
   document.getElementById("prodQty").value = "";
@@ -194,95 +62,27 @@ function addProduct() {
 
 function submitOrder() {
   if (products.length === 0) {
-    alert("Add at least one product");
+    alert("కనీసం ఒక product add చేయాలి");
     return;
   }
 
-  const orderData = {
-    name: document.getElementById("custName").value,
+  const data = {
+    customer: document.getElementById("custName").value,
     mobile: document.getElementById("custMobile").value,
-    products: products,
-    message: document.getElementById("custMsg").value
+    products: products
   };
 
   fetch(ORDER_API, {
     method: "POST",
-    body: JSON.stringify(orderData)
+    body: JSON.stringify(data)
   })
-  .then(res => res.text())
   .then(() => {
-    alert("Order submitted successfully!");
-
-    let productText = products
-      .map(p => • ${p.name} (${p.qty}))
-      .join("\n");
-
-    const msg = encodeURIComponent(
-      "New Order\n" +
-      "Name: " + orderData.name + "\n" +
-      "Mobile: " + orderData.mobile + "\n\n" +
-      "Products:\n" + productText
-    );
-
-    window.open(
-      "https://wa.me/919642162599?text=" + msg,
-      "_blank"
-    );
-  });
+    alert("Order successfully submitted!");
+    products = [];
+    document.getElementById("productList").innerHTML = "";
+  })
+  .catch(() => alert("Error occurred"));
 }
-</script>
-  
-<script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
-  const WHATSAPP = "9642162599";
-
-  let allData = [];
-
-  fetch(API_URL)
-    .then(res => res.json())
-    .then(data => {
-      allData = data;
-      renderTable("");
-    });
-
-  function renderTable(filter) {
-    const tbody = document.getElementById("stockTable");
-    tbody.innerHTML = "";
-
-    allData.forEach(item => {
-      const stock = Number(item.Stock);
-      if (stock <= 0) return;
-
-      if (
-        filter &&
-        !item.ProductName.toLowerCase().includes(filter.toLowerCase())
-      ) return;
-
-      const msg = encodeURIComponent(
-        "Hi, I want this product:\n" + item.ProductName
-      );
-
-      const row = `
-        <tr>
-          <td>${item.ProductName}</td>
-          <td>${stock}</td>
-          <td>
-            <a class="btn" target="_blank"
-               href="https://wa.me/${WHATSAPP}?text=${msg}">
-               WhatsApp
-            </a>
-          </td>
-        </tr>
-      `;
-
-      tbody.innerHTML += row;
-    });
-  }
-
-  document.getElementById("search")
-    .addEventListener("input", e => {
-      renderTable(e.target.value);
-    });
 </script>
 
 </body>
