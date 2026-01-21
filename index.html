@@ -299,7 +299,7 @@ function sendToWhatsApp() {
     let name = document.getElementById('name').value;
     let mobile = document.getElementById('mobile').value;
     
-    // ఒకవేళ ఖాళీగా ఉంటే అలర్ట్ ఇస్తుంది
+    
     if(name == "" || mobile == "") {
         alert("దయచేసి పేరు మరియు నంబర్ నమోదు చేయండి");
         return;
@@ -310,7 +310,7 @@ function sendToWhatsApp() {
     message += "*Mobile:* " + mobile + "%0A";
     message += "*Order Details:* Please check the stock list.";
 
-    // మీ వాట్సాప్ నంబర్ ఇక్కడ ఇవ్వండి (Country code 91 తో)
+    
     let whatsapp_url = "https://wa.me/919642162599?text=" + message;
     
     window.open(whatsapp_url, '_blank').focus();
