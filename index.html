@@ -1,82 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>CVK ENTERPRISE</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>CVK ENTERPRISE</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-    }
-
-    header {
-      background: #0b4fd8;
-      color: white;
-      padding: 15px;
-      text-align: center;
-    }
-
-    section {
-      padding: 15px;
-      background: white;
-      margin: 10px;
-      border-radius: 5px;
-    }
-
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      font-size: 14px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
-      font-size: 14px;
-    }
-
-    th {
-      background: #eee;
-    }
-
-    .wa-btn {
-      background: #25D366;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 4px;
-      text-decoration: none;
-      font-size: 13px;
-    }
-
-    footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 20px;
-      font-size: 14px;
-    }
-  </style>
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#f5f5f5;
+}
+header{
+  background:#0b4fd6;
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+header img{
+  height:70px;
+  margin-bottom:8px;
+}
+section{
+  padding:20px;
+  background:white;
+  margin:20px;
+  border-radius:6px;
+}
+input{
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+th,td{
+  border:1px solid #ccc;
+  padding:8px;
+  text-align:left;
+}
+th{
+  background:#eee;
+}
+a.whatsapp{
+  background:#25D366;
+  color:white;
+  padding:6px 10px;
+  border-radius:4px;
+  text-decoration:none;
+}
+footer{
+  background:#222;
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <img src="logo.png" alt="CVK ENTERPRISE"
-       style="height:70px;margin-bottom:8px;">
+  <img src="logo.png" alt="CVK ENTERPRISE">
   <h2>CVK ENTERPRISE</h2>
   <p>Bike Spare Parts – Andhra Pradesh</p>
-</hea
+</header>
 
 <section>
   <h3>Available Stock</h3>
@@ -84,25 +73,6 @@
   <input type="text" id="search" placeholder="Search product...">
 
   <table>
-    <section>
-  <h3>మన గురించి</h3>
-  <p>
-    CVK ENTERPRISE అనేది విశాఖపట్నం, గోపాలపట్నం కేంద్రంగా
-    పనిచేస్తున్న ఒక నమ్మకమైన Bike Spare Parts వ్యాపారం.
-  </p>
-
-  <p>
-    Engine Parts, Brake Parts, Electrical Items, Filters,
-    Bearings వంటి అన్ని Two-Wheeler Spare Parts
-    హోల్‌సేల్ & రిటైల్ గా అందుబాటులో ఉన్నాయి.
-  </p>
-
-  <p>
-    ✔️ నాణ్యమైన ఉత్పత్తులు<br>
-    ✔️ సరసమైన ధరలు<br>
-    ✔️ ఆంధ్రప్రదేశ్ అంతటా డెలివరీ
-  </p>
-</sectio
     <thead>
       <tr>
         <th>Product Name</th>
@@ -111,9 +81,21 @@
       </tr>
     </thead>
     <tbody id="stockTable">
-      <!-- DATA WILL COME HERE -->
+      <!-- Data will come here -->
     </tbody>
   </table>
+</section>
+
+<section>
+  <h3>మా గురించి</h3>
+  <p>
+    CVK ENTERPRISE అనేది విశాఖపట్నం కేంద్రంగా పనిచేస్తున్న
+    ఒక నమ్మకమైన Bike Spare Parts వ్యాపారం.
+  </p>
+  <p>
+    Engine Parts, Brake Parts, Electrical Items, Filters,
+    Bearings మరియు Two-Wheeler Spare Parts అందుబాటులో ఉంటాయి.
+  </p>
 </section>
 
 <section>
@@ -131,50 +113,47 @@
 </footer>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
-  const WHATSAPP = "919642162599";
+const apiUrl = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
+const whatsappNumber = "919642162599";
 
-  const tableBody = document.getElementById("stockTable");
-  const searchBox = document.getElementById("search");
+let stockData = [];
 
-  let allData = [];
-
-  fetch(API_URL)
-    .then(res => res.json())
-    .then(data => {
-      allData = data;
-      renderTable("");
-    });
-
-  function renderTable(filter) {
-    tableBody.innerHTML = "";
-
-    allData.forEach(item => {
-      const stock = parseFloat(item.Stock);
-
-      if (isNaN(stock) || stock <= 0) return;
-      if (!item.ProductName.toLowerCase().includes(filter.toLowerCase())) return;
-
-      const msg = encodeURIComponent(
-        "Hi, I want this product:\n" +
-        item.ProductName + "\nStock: " + stock
-      );
-
-      const waLink = https://wa.me/${WHATSAPP}?text=${msg};
-
-      tableBody.innerHTML += `
-        <tr>
-          <td>${item.ProductName}</td>
-          <td>${stock}</td>
-          <td><a class="wa-btn" href="${waLink}" target="_blank">WhatsApp</a></td>
-        </tr>
-      `;
-    });
-  }
-
-  searchBox.addEventListener("keyup", e => {
-    renderTable(e.target.value);
+fetch(apiUrl)
+  .then(res => res.json())
+  .then(data => {
+    stockData = data;
+    renderTable("");
   });
+
+function renderTable(filter){
+  const tbody = document.getElementById("stockTable");
+  tbody.innerHTML = "";
+
+  stockData.forEach(item => {
+    if(filter && !item.ProductName.toLowerCase().includes(filter)) return;
+    if(item.Stock <= 0) return;
+
+    const msg = encodeURIComponent(
+      "Hi, I want this product:\n" +
+      item.ProductName +
+      "\nStock: " + item.Stock
+    );
+
+    const waLink = https://wa.me/${919642162599}?text=${msg};
+
+    tbody.innerHTML += `
+      <tr>
+        <td>${item.ProductName}</td>
+        <td>${item.Stock}</td>
+        <td><a class="whatsapp" href="${waLink}" target="_blank">WhatsApp</a></td>
+      </tr>
+    `;
+  });
+}
+
+document.getElementById("search").addEventListener("keyup", e => {
+  renderTable(e.target.value.toLowerCase());
+});
 </script>
 
 </body>
