@@ -103,6 +103,38 @@
   </table>
 </section>
 
+  <section>
+  <h2>Online Order</h2>
+
+  <input id="custName" placeholder="Your Name">
+  <input id="custMobile" placeholder="Mobile Number">
+  <input id="custProduct" placeholder="Product Name">
+  <input id="custQty" type="number" placeholder="Quantity">
+  <textarea id="custMsg" placeholder="Address / Message"
+            style="width:100%;padding:10px;"></textarea>
+
+  <button onclick="submitOrder()"
+    style="margin-top:10px;
+           background:#0b5ed7;
+           color:white;
+           padding:10px;
+           width:100%;
+           border:none;
+           border-radius:5px;">
+    Submit Order
+  </button>
+</section>
+
+<section>
+  <h2>Payment Details</h2>
+
+  <p><b>UPI ID:</b> <span id="upiId">YOURUPIID@upi</span></p>
+  <p>Payment చేసిన తర్వాత Screenshot WhatsApp లో పంపండి</p>
+
+  <!-- Optional QR -->
+  <!-- <img src="upi-qr.png" style="width:200px;"> -->
+</section>
+  
 <section>
   <h2>మా గురించి</h2>
   <p>
@@ -129,6 +161,43 @@
   <p>Delivery: All over Andhra Pradesh</p>
 </footer>
 
+  <script>
+const ORDER_API =
+  "https://script.google.com/macros/s/AKfycbwT5Ur92unvWghG4nmRtjlsNzVjSxHFz_5uYXzEuc5IjqqdEpgWvz_oyoc5CvwcXFQu/exec";
+
+function submitOrder() {
+  const orderData = {
+    name: document.getElementById("custName").value,
+    mobile: document.getElementById("custMobile").value,
+    product: document.getElementById("custProduct").value,
+    quantity: document.getElementById("custQty").value,
+    message: document.getElementById("custMsg").value
+  };
+
+  fetch(ORDER_API, {
+    method: "POST",
+    body: JSON.stringify(orderData)
+  })
+  .then(res => res.json())
+  .then(() => {
+    alert("Order submitted successfully!");
+
+    const msg = encodeURIComponent(
+      "New Order\n" +
+      "Name: " + orderData.name + "\n" +
+      "Mobile: " + orderData.mobile + "\n" +
+      "Product: " + orderData.product + "\n" +
+      "Qty: " + orderData.quantity
+    );
+
+    window.open(
+      "https://wa.me/919642162599?text=" + msg,
+      "_blank"
+    );
+  });
+}
+</script>
+  
 <script>
   const API_URL = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
   const WHATSAPP = "9642162599";
