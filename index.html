@@ -1,61 +1,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CVK Order</title>
+  <meta charset="UTF-8">
+  <title>CVK ENTERPRISE - Order</title>
 </head>
-
 <body>
 
-<h2>Add Products</h2>
+<h2>Online Order</h2>
 
-<input id="prodName" placeholder="Product Name">
-<input id="prodQty" type="number" placeholder="Qty">
+<!-- Customer Details -->
+<label>Customer Name:</label><br>
+<input type="text" id="custName"><br><br>
 
-<button onclick="addProduct()">➕ Add Product</button>
+<label>Mobile Number:</label><br>
+<input type="text" id="custMobile"><br><br>
 
-<ul id="productList"></ul>
+<label>Message:</label><br>
+<textarea id="custMessage"></textarea><br><br>
 
 <hr>
 
-<button onclick="submitOrder()">✅ Submit Order</button>
+<h3>Add Products</h3>
+
+<input type="text" id="productName" placeholder="Product Name">
+<input type="number" id="productQty" placeholder="Qty" value="1">
+<button type="button" onclick="addProduct()">➕ Add Product</button>
+
+<h3>Products List</h3>
+<table border="1" width="100%">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Product</th>
+      <th>Qty</th>
+    </tr>
+  </thead>
+  <tbody id="productList">
+  </tbody>
+</table>
+
+<br>
+<button type="button" onclick="submitOrder()">✅ Submit Order</button>
 
 <script>
+const ORDER_API = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
+
 let products = [];
 
+/* ADD PRODUCT FUNCTION */
 function addProduct() {
-  const name = document.getElementById("prodName").value;
-  const qty  = document.getElementById("prodQty").value;
+  const name = document.getElementById("productName").value.trim();
+  const qty = document.getElementById("productQty").value;
 
-  if (!name || !qty) {
-    alert("Enter product & quantity");
+  if (name === "" || qty === "") {
+    alert("Product name & quantity ఇవ్వండి");
     return;
   }
 
-  products.push({ name, qty });
+  products.push({ product: name, quantity: qty });
 
-  let html = "";
-  products.forEach((p, i) => {
-    html += <li>${i+1}. ${p.name} - ${p.qty}</li>;
-  });
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${products.length}</td>
+    <td>${name}</td>
+    <td>${qty}</td>
+  `;
+  document.getElementById("productList").appendChild(row);
 
-  document.getElementById("productList").innerHTML = html;
-
-  document.getElementById("prodName").value = "";
-  document.getElementById("prodQty").value = "";
+  document.getElementById("productName").value = "";
+  document.getElementById("productQty").value = 1;
 }
 
+/* SUBMIT ORDER FUNCTION */
 function submitOrder() {
   if (products.length === 0) {
-    alert("No products added");
+    alert("కనీసం ఒక ప్రొడక్ట్ add చేయండి");
     return;
   }
 
-  let msg = "New Order:\n";
-  products.forEach(p => {
-    msg += ${p.name} - ${p.qty}\n;
-  });
+  const data = {
+    name: document.getElementById("custName").value,
+    mobile: document.getElementById("custMobile").value,
+    message: document.getElementById("custMessage").value,
+    products: products
+  };
 
-  alert(msg);
+  fetch(ORDER_API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=UTF-8"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.text())
+  .then(() => {
+    alert("Order successfully submitted 🎉");
+    products = [];
+    document.getElementById("productList").innerHTML = "";
+  })
+  .catch(err => {
+    alert("Error occurred");
+    console.log(err);
+  });
 }
 </script>
 
