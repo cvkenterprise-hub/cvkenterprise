@@ -47,29 +47,34 @@
   </div>
 </section>
 
-<section>
-  <h2>Online Order</h2>
-  <form id="orderForm" action="https://formsubmit.co/cvkenterprise.ho@gmail.com" method="POST">
-      <div style="display: flex; gap: 10px;">
-          <input type="text" name="Customer_Name" id="custName" placeholder="మీ పేరు (Your Name)" required>
-          <input type="text" name="Customer_Mobile" id="custMobile" placeholder="మొబైల్ నంబర్" required>
-      </div>
+function sendToWhatsApp() {
+    const name = document.getElementById('custName').value;
+    const mobile = document.getElementById('custMobile').value;
+    const productNames = document.getElementsByClassName('pName');
+    const productQtys = document.getElementsByClassName('pQty');
+    
+    if(!name || !mobile || productNames[0].value === "") {
+        alert("దయచేసి పేరు మరియు కనీసం ఒక ప్రొడక్ట్ వివరాలు నింపండి");
+        return;
+    }
 
-      <div id="product-container">
-          <div class="product-entry">
-              <input type="text" name="Product_1" class="pName" placeholder="Product Name" required>
-              <input type="number" name="Qty_1" class="pQty" placeholder="Qty" required style="width: 80px;">
-          </div>
-      </div>
+    let productListText = "";
+    for(let i=0; i < productNames.length; i++) {
+        if(productNames[i].value !== "") {
+            // ప్రొడక్ట్ లిస్టును చక్కగా ఫార్మాట్ చేయడం
+            productListText += `${i+1}. ${productNames[i].value} - (${productQtys[i].value})%0A`;
+        }
+    }
 
-      <button type="button" class="btn-add" onclick="addNewProductField()">+ Add More Products</button>
-
-      <div style="margin-top: 20px;">
-          <button type="submit" class="btn-submit">Submit Order (Email)</button>
-          <button type="button" onclick="sendToWhatsApp()" class="btn-wa" style="margin-left: 10px;">Order via WhatsApp</button>
-      </div>
-  </form>
-</section>
+    // మెసేజ్ ఫార్మాట్
+    const msg = `*CVK Enterprise - New Order*%0A%0A*Name:* ${name}%0A*Mobile:* ${mobile}%0A%0A*Products:*%0A${productListText}`;
+    
+    // ముఖ్యం: ఇక్కడ wa.me వాడండి
+    const whatsappUrl = `https://wa.me/919642162599?text=${msg}`;
+    
+    // కొత్త విండోలో ఓపెన్ చేయడం
+    window.open(whatsappUrl, '_blank');
+}
 
 <section>
   <h3>Payment Details</h3>
