@@ -103,24 +103,30 @@
   </table>
 </section>
 
-  <section>
+ <section>
   <h2>Online Order</h2>
 
   <input id="custName" placeholder="Your Name">
   <input id="custMobile" placeholder="Mobile Number">
-  <input id="custProduct" placeholder="Product Name">
-  <input id="custQty" type="number" placeholder="Quantity">
-  <textarea id="custMsg" placeholder="Address / Message"
-            style="width:100%;padding:10px;"></textarea>
+
+  <hr>
+
+  <h3>Add Products</h3>
+
+  <input id="prodName" placeholder="Product Name">
+  <input id="prodQty" type="number" placeholder="Quantity">
+
+  <button onclick="addProduct()">➕ Add Product</button>
+
+  <ul id="productList"></ul>
+
+  <textarea id="custMsg"
+    placeholder="Address / Message"
+    style="width:100%;padding:10px;">
+  </textarea>
 
   <button onclick="submitOrder()"
-    style="margin-top:10px;
-           background:#0b5ed7;
-           color:white;
-           padding:10px;
-           width:100%;
-           border:none;
-           border-radius:5px;">
+    style="background:#0b5ed7;color:white;padding:10px;width:100%;">
     Submit Order
   </button>
 </section>
