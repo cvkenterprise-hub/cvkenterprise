@@ -1,136 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="te">
 <head>
   <meta charset="UTF-8">
-  <title>CVK ENTERPRISE - Order</title>
+  <title>CVK ENTERPRISE – Order</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, button { padding: 6px; margin: 4px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #aaa; padding: 6px; text-align: left; }
+    th { background: #f0f0f0; }
+  </style>
 </head>
 <body>
 
-<h2>Online Order</h2>
+<h2>CVK ENTERPRISE – Online Order</h2>
 
-<!-- Customer Details -->
-<label>Customer Name:</label><br>
-<input type="text" id="custName"><br><br>
-
-<label>Mobile Number:</label><br>
-<input type="text" id="custMobile"><br><br>
-
-<label>Message:</label><br>
-<textarea id="custMessage"></textarea><br><br>
-
-<hr>
+<h3>Customer Details</h3>
+<input id="custName" placeholder="Customer Name"><br>
+<input id="custMobile" placeholder="Mobile Number"><br>
 
 <h3>Add Products</h3>
+<input id="prodName" placeholder="Product Name">
+<input id="prodQty" type="number" placeholder="Qty">
+<button onclick="addProduct()">➕ Add Product</button>
 
-<input type="text" id="productName" placeholder="Product Name">
-<input type="number" id="productQty" placeholder="Qty" value="1">
-<button type="button" onclick="addProduct()">➕ Add Product</button>
-
-<h3>Products List</h3>
-<table border="1" width="100%">
+<table>
   <thead>
     <tr>
-      <th>#</th>
       <th>Product</th>
       <th>Qty</th>
     </tr>
   </thead>
-  <tbody id="productList">
-  </tbody>
+  <tbody id="productList"></tbody>
 </table>
 
 <br>
-<button type="button" onclick="submitOrder()">✅ Submit Order</button>
+<button onclick="submitOrder()">✅ Submit Order</button>
 
 <script>
 const ORDER_API = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
 
 let products = [];
 
-/* ADD PRODUCT FUNCTION */
 function addProduct() {
-  const name = document.getElementById("productName").value.trim();
-  const qty = document.getElementById("productQty").value;
+  const name = document.getElementById("prodName").value;
+  const qty = document.getElementById("prodQty").value;
 
-  if (name === "" || qty === "") {
-    alert("Product name & quantity ఇవ్వండి");
+  if (!name || !qty) {
+    alert("Product name & quantity ఇవ్వాలి");
     return;
   }
 
-  products.push({ product: name, quantity: qty });
+  products.push({ name, qty });
 
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${products.length}</td>
-    <td>${name}</td>
-    <td>${qty}</td>
-  `;
-  document.getElementById("productList").appendChild(row);
+  const row = `<tr><td>${name}</td><td>${qty}</td></tr>`;
+  document.getElementById("productList").innerHTML += row;
 
-  document.getElementById("productName").value = "";
-  document.getElementById("productQty").value = 1;
+  document.getElementById("prodName").value = "";
+  document.getElementById("prodQty").value = "";
 }
 
-/* SUBMIT ORDER FUNCTION */
 function submitOrder() {
   if (products.length === 0) {
-    alert("కనీసం ఒక ప్రొడక్ట్ add చేయండి");
+    alert("కనీసం ఒక product add చేయాలి");
     return;
   }
 
   const data = {
-    name: document.getElementById("custName").value,
+    customer: document.getElementById("custName").value,
     mobile: document.getElementById("custMobile").value,
-    message: document.getElementById("custMessage").value,
     products: products
   };
 
   fetch(ORDER_API, {
     method: "POST",
-    headers: {
-      "Content-Type": "text/plain;charset=UTF-8"
-    },
     body: JSON.stringify(data)
   })
-  .then(res => res.text())
   .then(() => {
-    alert("Order successfully submitted 🎉");
+    alert("Order successfully submitted!");
     products = [];
     document.getElementById("productList").innerHTML = "";
   })
-  .catch(err => {
-    alert("Error occurred");
-    console.log(err);
-  });
+  .catch(() => alert("Error occurred"));
 }
 </script>
 
 </body>
-</html>function sendToWhatsApp() {
-    const name = document.getElementById('custName').value;
-    const mobile = document.getElementById('custMobile').value;
-    const productNames = document.getElementsByClassName('pName');
-    const productQtys = document.getElementsByClassName('pQty');
-    
-    if(!name || !mobile || productNames[0].value === "") {
-        alert("దయచేసి పేరు మరియు కనీసం ఒక ప్రొడక్ట్ వివరాలు నింపండి");
-        return;
-    }
-
-    let productListText = "";
-    for(let i=0; i < productNames.length; i++) {
-        if(productNames[i].value !== "") {
-            // ప్రొడక్ట్ లిస్టును చక్కగా ఫార్మాట్ చేయడం
-            productListText += `${i+1}. ${productNames[i].value} - (${productQtys[i].value})%0A`;
-        }
-    }
-
-    // మెసేజ్ ఫార్మాట్
-    const msg = `*CVK Enterprise - New Order*%0A%0A*Name:* ${name}%0A*Mobile:* ${mobile}%0A%0A*Products:*%0A${productListText}`;
-    
-    // ముఖ్యం: ఇక్కడ wa.me వాడండి
-    const whatsappUrl = `https://wa.me/919642162599?text=${msg}`;
-    
-    // కొత్త విండోలో ఓపెన్ చేయడం
-    window.open(whatsappUrl, '_blank');
-}
+</html>
