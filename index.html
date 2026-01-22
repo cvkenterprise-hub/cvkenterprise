@@ -2,114 +2,170 @@
 <html lang="te">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>CVK Enterprise</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CVK ENTERPRISE</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 10px; background-color: #f0f2f5; }
-        .card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 450px; margin: auto; }
+        :root { --primary: #075E54; --secondary: #25D366; --dark: #333; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background-color: #f4f7f6; color: var(--dark); line-height: 1.6; }
+        .container { max-width: 500px; margin: auto; padding: 15px; }
         
-        /* లోగో స్టైల్ */
-        .logo-container { text-align: center; margin-bottom: 10px; }
-        .logo-container img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #075E54; }
+        /* Header & Logo */
+        .header { text-align: center; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin-bottom: 10px; }
+        
+        /* About Us */
+        .about-box { background: #e8f5e9; border-left: 5px solid var(--primary); padding: 15px; margin: 20px 0; border-radius: 5px; font-size: 0.9rem; }
 
-        h2 { text-align: center; color: #075E54; margin: 5px 0; font-size: 1.3rem; }
-        
-        /* అబౌట్ సెక్షన్ */
-        .about-section { background: #e8f5e9; padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 15px; border-left: 4px solid #2e7d32; }
+        /* Product Catalog (Stock List) */
+        .product-catalog { background: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .catalog-title { color: var(--primary); font-weight: bold; border-bottom: 2px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
+        .catalog-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        .catalog-item { background: #f0f2f5; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; border: 1px solid #ddd; }
 
-        label { font-weight: bold; display: block; margin-top: 10px; font-size: 0.9rem; }
-        input, select, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+        /* Order Form */
+        .order-form { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        input, select { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+        
+        .product-entry { background: #fafafa; padding: 15px; border: 1px solid #eee; border-radius: 10px; margin-top: 15px; position: relative; }
+        .add-btn { background: #2196F3; color: white; border: none; padding: 10px; border-radius: 5px; margin-top: 10px; width: 100%; font-weight: bold; cursor: pointer; }
+        
+        /* Action Buttons */
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        .btn { flex: 1; padding: 15px; border: none; border-radius: 10px; font-weight: bold; color: white; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+        .btn-wa { background: var(--secondary); }
+        .btn-mail { background: #EA4335; }
 
-        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
-        .btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; font-size: 0.9rem; text-align: center; text-decoration: none; }
-        
-        .btn-whatsapp { background-color: #25D366; }
-        .btn-email { background-color: #EA4335; }
-        
-        .payment-box { margin-top: 15px; padding: 10px; border: 2px dashed #ff4d4d; background: #fff5f5; text-align: center; border-radius: 8px; }
-        .footer { background: #333; color: white; padding: 15px; margin-top: 20px; border-radius: 8px; text-align: center; font-size: 0.8rem; }
+        .payment-info { background: #fff5f5; border: 2px dashed #ff4d4d; padding: 15px; margin-top: 20px; border-radius: 10px; text-align: center; }
+        .footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #666; }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <div class="logo-container">
-        <img src="https://via.placeholder.com/80" alt="CVK Logo">
-        <h2>CVK ENTERPRISE</h2>
+<div class="container">
+    <div class="header">
+        <img src="https://raw.githubusercontent.com/మీ_యూజర్_నేమ్/మీ_రిపో/main/logo.jpg" alt="CVK Logo" class="logo">
+        <h2 style="margin:0; color:var(--primary);">CVK ENTERPRISE</h2>
+        <p style="margin:5px 0; font-size:0.8rem; color:#666;">GST: 37ADSPN1867H1ZY</p>
     </div>
 
-    <div class="about-section">
-        <b>మా గురించి:</b> మేము ఆంధ్రప్రదేశ్ అంతటా నాణ్యమైన ఆటోమొబైల్ స్పేర్ పార్ట్స్ (Two-Wheeler Spare Parts) డెలివరీ చేస్తాము.
+    <div class="about-box">
+        <b>మా గురించి:</b> CVK ఎంటర్ప్రైజ్ గత 2.5 సంవత్సరాలుగా విశాఖపట్నంలో అత్యుత్తమ సేవలు అందిస్తోంది. మేము నాణ్యమైన ఉత్పత్తులను సరసమైన ధరలకే కస్టమర్లకు అందిస్తున్నాము. మన వద్ద అన్ని ప్రముఖ కంపెనీల స్పేర్ పార్ట్స్ లభించును మరియు వినియోగదారుల కోరిక మేరకు ప్రత్యేకంగా తెప్పించబడును.
     </div>
 
-    <label>కస్టమర్ పేరు:</label>
-    <input type="text" id="custName" placeholder="మీ పేరు">
-
-    <label>ప్రొడక్ట్ సెలెక్ట్ చేయండి:</label>
-    <select id="productName">
-        <option value="">-- సెలెక్ట్ చేయండి --</option>
-        <option value="TIMING CHAIN">TIMING CHAIN</option>
-        <option value="SPARK PLUG">SPARK PLUG</option>
-        <option value="BRAKE PADS">BRAKE PADS</option>
-        <option value="ENGINE OIL">ENGINE OIL</option>
-    </select>
-
-    <label>మరిన్ని ప్రొడక్ట్స్ (ఉంటే ఇక్కడ రాయండి):</label>
-    <textarea id="extraProducts" rows="2" placeholder="ఉదా: గాస్కెట్, ఆయిల్ ఫిల్టర్.."></textarea>
-
-    <label>క్వాంటిటీ:</label>
-    <input type="number" id="qty" value="1">
-
-    <div class="btn-group">
-        <button class="btn btn-whatsapp" onclick="sendWhatsApp()">WhatsApp ఆర్డర్</button>
-        <button class="btn btn-email" onclick="sendEmail()">Email ఆర్డర్</button>
+    <div class="product-catalog">
+        <div class="catalog-title">మా వద్ద లభించే ఉత్పత్తులు:</div>
+        <div class="catalog-list">
+            <span class="catalog-item">TIMING CHAIN</span>
+            <span class="catalog-item">SPARK PLUG</span>
+            <span class="catalog-item">BRAKE PADS</span>
+            <span class="catalog-item">ENGINE OIL</span>
+            <span class="catalog-item">CLUTCH PLATES</span>
+            <span class="catalog-item">AIR FILTERS</span>
+            <span class="catalog-item">GASKETS</span>
+            <span class="catalog-item">CHAIN SPROCKETS</span>
+        </div>
     </div>
 
-    <div class="payment-box">
+    <div class="order-form">
+        <h3 style="margin-top:0; text-align:center;">ఆర్డర్ ఫామ్ (Order Form)</h3>
+        <label>కస్టమర్ పేరు:</label>
+        <input type="text" id="custName" placeholder="మీ పేరు రాయండి">
+        
+        <label>మొబైల్ నంబర్:</label>
+        <input type="tel" id="custMobile" placeholder="మీ ఫోన్ నంబర్">
+
+        <div id="itemsList">
+            <div class="product-entry">
+                <label>ప్రోడక్ట్ సెలెక్ట్ చేయండి:</label>
+                <select class="p-name">
+                    <option value="">-- సెలెక్ట్ చేయండి --</option>
+                    <option value="TIMING CHAIN">TIMING CHAIN</option>
+                    <option value="SPARK PLUG">SPARK PLUG</option>
+                    <option value="BRAKE PADS">BRAKE PADS</option>
+                    <option value="ENGINE OIL">ENGINE OIL</option>
+                    <option value="ఇతర ఉత్పత్తులు">ఇతర ఉత్పత్తులు (కింద రాయండి)</option>
+                </select>
+                <input type="text" class="p-custom" placeholder="మరేదైనా కావాలంటే ఇక్కడ రాయండి" style="display:none;">
+                <label>క్వాంటిటీ:</label>
+                <input type="number" class="p-qty" value="1" min="1">
+            </div>
+        </div>
+
+        <button class="add-btn" onclick="addItem()">+ ఇంకొక ప్రోడక్ట్ యాడ్ చేయండి</button>
+
+        <div class="btn-group">
+            <button class="btn btn-wa" onclick="sendOrder('WA')">WhatsApp ఆర్డర్</button>
+            <button class="btn btn-mail" onclick="sendOrder('MAIL')">Email ఆర్డర్</button>
+        </div>
+    </div>
+
+    <div class="payment-info">
         <p style="margin:0; font-weight:bold; color:blue;">Payment UPI ID</p>
-        <p style="margin:5px 0;"><b>9642162599@ybl</b></p>
+        <p style="margin:8px 0; font-size:1.2rem;"><b>9642162599@ybl</b></p>
+        <p style="font-size:0.7rem; color:red; margin:0;">పేమెంట్ చేశాక Screenshot పంపడం మర్చిపోవద్దు.</p>
     </div>
-</div>
 
-<div class="footer">
-    <b>GSTIN: 37ADSPN1867H1ZY</b><br>
-    📞 9642162599 | Delivery: All over AP
+    <div class="footer">
+        <b>CVK ENTERPRISE - విశాఖపట్నం</b><br>
+        📞 9642162599 | డెలివరీ: ఆంధ్రప్రదేశ్ అంతటా.
+    </div>
 </div>
 
 <script>
-function getOrderDetails() {
-    const name = document.getElementById('custName').value;
-    const product = document.getElementById('productName').value;
-    const extra = document.getElementById('extraProducts').value;
-    const qty = document.getElementById('qty').value;
-    
-    let details = `New Order from: ${name}\n`;
-    details += `Product: ${product}\n`;
-    if(extra) details += `Extra Items: ${extra}\n`;
-    details += `Quantity: ${qty}\n`;
-    
-    return { name, details };
-}
+    // కొత్త ఐటమ్ రో యాడ్ చేయడం
+    function addItem() {
+        const div = document.createElement('div');
+        div.className = 'product-entry';
+        div.innerHTML = `
+            <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
+            <label>ప్రోడక్ట్ సెలెక్ట్ చేయండి:</label>
+            <select class="p-name">
+                <option value="">-- సెలెక్ట్ చేయండి --</option>
+                <option value="TIMING CHAIN">TIMING CHAIN</option>
+                <option value="SPARK PLUG">SPARK PLUG</option>
+                <option value="BRAKE PADS">BRAKE PADS</option>
+                <option value="ENGINE OIL">ENGINE OIL</option>
+                <option value="ఇతర ఉత్పత్తులు">ఇతర ఉత్పత్తులు</option>
+            </select>
+            <label>క్వాంటిటీ:</label>
+            <input type="number" class="p-qty" value="1" min="1">
+        `;
+        document.getElementById('itemsList').appendChild(div);
+    }
 
-// 5. వాట్సాప్ పంపే ఫంక్షన్
-function sendWhatsApp() {
-    const data = getOrderDetails();
-    if(!data.name) { alert("పేరు నింపండి"); return; }
-    
-    const url = "https://api.whatsapp.com/send?phone=919642162599&text=" + encodeURIComponent(data.details);
-    window.location.href = url;
-}
+    function sendOrder(type) {
+        const name = document.getElementById('custName').value;
+        const mobile = document.getElementById('custMobile').value;
+        const names = document.getElementsByClassName('p-name');
+        const qtys = document.getElementsByClassName('p-qty');
 
-// 6. ఈమెయిల్ పంపే ఫంక్షన్
-function sendEmail() {
-    const data = getOrderDetails();
-    if(!data.name) { alert("పేరు నింపండి"); return; }
-    
-    const subject = encodeURIComponent("New Order - CVK Enterprise");
-    const body = encodeURIComponent(data.details);
-    
-    window.location.href = `mailto:cvkenterprise@gmail.com?subject=${subject}&body=${body}`;
-}
+        if (!name || !names[0].value) {
+            alert("దయచేసి మీ పేరు మరియు కనీసం ఒక ప్రోడక్ట్ సెలెక్ట్ చేయండి.");
+            return;
+        }
+
+        let orderItems = "";
+        for (let i = 0; i < names.length; i++) {
+            if (names[i].value) {
+                orderItems += `${i + 1}. ${names[i].value} - ${qtys[i].value} Qty\n`;
+            }
+        }
+
+        const fullMsg = `*CVK Enterprise - New Order*\n` +
+                        `--------------------------\n` +
+                        `*Customer:* ${name}\n` +
+                        `*Mobile:* ${mobile}\n\n` +
+                        `*Items:*\n${orderItems}\n` +
+                        `--------------------------`;
+
+        if (type === 'WA') {
+            const waUrl = "https://api.whatsapp.com/send?phone=919642162599&text=" + encodeURIComponent(fullMsg);
+            window.location.href = waUrl;
+        } else {
+            const mailUrl = `mailto:cvkenterprise@gmail.com?subject=New Order from ${name}&body=${encodeURIComponent(fullMsg)}`;
+            window.location.href = mailUrl;
+        }
+    }
 </script>
 
 </body>
