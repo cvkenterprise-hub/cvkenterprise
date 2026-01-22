@@ -1,51 +1,48 @@
 <!DOCTYPE html>
-<html lang="te">
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVK Enterprise</title>
+    <title>CVK ENTERPRISE</title>
     <style>
-        body { font-family: sans-serif; margin: 0; background: #f0f2f5; }
-        .nav { background: #0b5345; color: white; padding: 15px; text-align: center; position: sticky; top: 0; font-weight: bold; }
-        .card { background: white; margin: 15px; padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 6px solid #0b5345; position: relative; }
-        .discount { position: absolute; top: 10px; right: 10px; background: #27ae60; color: white; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: bold; }
-        .name { color: #0b5345; font-size: 18px; font-weight: bold; margin: 0; }
-        .desc { font-size: 13px; color: #666; margin: 5px 0; }
-        .mrp { font-size: 20px; font-weight: bold; color: #d35400; margin: 10px 0; }
-        .details { font-size: 12px; background: #f9f9f9; padding: 8px; border-radius: 5px; color: #444; border: 1px dashed #ccc; }
+        :root { --main: #0b5345; --accent: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f7f6; }
+        .nav { background: var(--main); color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; }
+        .container { padding: 15px; max-width: 800px; margin: auto; }
+        .card { background: white; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-left: 5px solid var(--main); position: relative; }
+        .discount-tag { position: absolute; top: 10px; right: 10px; background: #27ae60; color: white; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: bold; }
+        .name { color: var(--main); font-size: 18px; font-weight: bold; margin-bottom: 5px; }
+        .desc { font-size: 13px; color: #666; margin-bottom: 10px; }
+        .price { font-size: 20px; font-weight: bold; color: #d35400; margin: 10px 0; }
+        .info { font-size: 12px; background: #f9f9f9; padding: 8px; border-radius: 5px; color: #444; border: 1px dashed #ccc; }
         .btn { background: #25D366; color: white; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; display: block; margin-top: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="nav">CVK ENTERPRISE - LIVE STOCK</div>
-    <div id="catalog">
-        <p style="text-align:center; padding:20px;">లోడ్ అవుతోంది...</p>
+    <div class="nav"><b>CVK ENTERPRISE</b></div>
+    <div class="container" id="catalog">
+        <p style="text-align:center;">లోడ్ అవుతోంది...</p>
     </div>
 
     <script>
-        // మీ Apps Script URL ఇక్కడ ఉంది
         const scriptUrl = "https://script.google.com/macros/s/AKfycbyQTS_LL-cwOcL0uFe7caSueu90-37hP3_nrB0aze8LiULMgzt2oK6VRC96HzsrohO3/exec";
 
         async function loadData() {
             try {
                 const res = await fetch(scriptUrl);
                 const data = await res.json();
-                const container = document.getElementById('catalog');
-                container.innerHTML = "";
-
-                data.forEach(item => {
-                    container.innerHTML += `
-                        <div class="card">
-                            ${item.discount ? `<div class="discount">${item.discount} OFF</div>` : ''}
-                            <div class="name">${item.name}</div>
-                            <div class="desc">${item.discription || ''}</div>
-                            <div class="mrp">MRP: ${item.mrp || '0'}</div>
-                            <div class="details"><b>Details:</b> ${item.details || '-'}</div>
-                            <a href="https://api.whatsapp.com/send?phone=919642162599&text=Order: ${encodeURIComponent(item.name)}" class="btn">ORDER NOW</a>
-                        </div>`;
-                });
+                const catalog = document.getElementById('catalog');
+                catalog.innerHTML = data.map(i => `
+                    <div class="card">
+                        ${i.discount ? `<div class="discount-tag">${i.discount} OFF</div>` : ''}
+                        <div class="name">${i.name}</div>
+                        <div class="desc">${i.discription || ''}</div>
+                        <div class="price">MRP: ${i.mrp || '0'}</div>
+                        <div class="info"><b>Details:</b> ${i.details || '-'}</div>
+                        <a href="https://api.whatsapp.com/send?phone=919642162599&text=Order: ${encodeURIComponent(i.name)}" class="btn">ORDER NOW</a>
+                    </div>
+                `).join('');
             } catch (e) {
-                document.getElementById('catalog').innerHTML = "<p style='text-align:center;'>డేటా రావట్లేదు. నెట్ చెక్ చేయండి.</p>";
+                document.getElementById('catalog').innerHTML = "డేటా రావట్లేదు!";
             }
         }
         window.onload = loadData;
