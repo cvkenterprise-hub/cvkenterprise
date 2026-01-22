@@ -1,167 +1,147 @@
 <!DOCTYPE html>
 <html lang="te">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CVK ENTERPRISE</title>
-  <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #f4f6f8; }
-    header { background: linear-gradient(90deg,#0b4dbb,#0f6bdc); color: white; text-align: center; padding: 20px; }
-    header img { height: 70px; margin-bottom: 10px; }
-    section { padding: 20px; background: white; margin: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    h2, h3 { margin-top: 0; color: #0b4dbb; }
-    input[type="text"], input[type="number"] { width: 100%; padding: 10px; margin-bottom: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    th { background: #eee; }
-    .btn-wa { background: #25D366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; }
-    .btn-submit { background: #0b4dbb; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-    .btn-add { background: #f39c12; color: white; padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 10px; }
-    footer { background: #222; color: white; text-align: center; padding: 20px; margin-top: 30px; }
-    .product-entry { display: flex; gap: 10px; margin-bottom: 10px; border-bottom: 1px dashed #ddd; padding-bottom: 10px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CVK Enterprise Order Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 15px;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+            color: #075E54;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        .product-box {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+        .btn-send {
+            width: 100%;
+            background-color: #25D366;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-send:active {
+            background-color: #128C7E;
+            transform: scale(0.98);
+        }
+        .footer {
+            margin-top: 20px;
+            padding: 15px;
+            background: #222;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        .payment {
+            margin-top: 15px;
+            padding: 10px;
+            border: 2px dashed #d9534f;
+            background: #fff5f5;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .payment b { color: #d9534f; }
+    </style>
 </head>
 <body>
 
-<header>
-  <img src="logo.png" alt="CVK ENTERPRISE">
-  <h1>CVK ENTERPRISE</h1>
-  <p>Bike Spare Parts – Andhra Pradesh</p>
-</header>
-
-<section>
-  <h2>Available Stock</h2>
-  <input type="text" id="search" placeholder="Search product name...">
-  <div style="overflow-x: auto;">
-    <table>
-      <thead>
-        <tr>
-          <th>Product Name</th>
-          <th>Stock</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="stockTable">
-        </tbody>
-    </table>
-  </div>
-</section>
-
-function sendToWhatsApp() {
-    const name = document.getElementById('custName').value;
-    const mobile = document.getElementById('custMobile').value;
-    const productNames = document.getElementsByClassName('pName');
-    const productQtys = document.getElementsByClassName('pQty');
+<div class="card">
+    <h2>CVK Enterprise Order</h2>
     
-    if(!name || !mobile || productNames[0].value === "") {
-        alert("దయచేసి పేరు మరియు కనీసం ఒక ప్రొడక్ట్ వివరాలు నింపండి");
-        return;
-    }
+    <label>Customer Name (పేరు):</label>
+    <input type="text" id="name" placeholder="మీ పేరు రాయండి">
 
-    let productListText = "";
-    for(let i=0; i < productNames.length; i++) {
-        if(productNames[i].value !== "") {
-            // ప్రొడక్ట్ లిస్టును చక్కగా ఫార్మాట్ చేయడం
-            productListText += `${i+1}. ${productNames[i].value} - (${productQtys[i].value})%0A`;
-        }
+    <label>Mobile Number (ఫోన్ నంబర్):</label>
+    <input type="tel" id="mobile" placeholder="మీ నంబర్">
+
+    <div class="product-box">
+        <label>Product Details (ప్రోడక్ట్ పేరు):</label>
+        <input type="text" id="product" placeholder="ఉదా: Timing Chain">
+        
+        <label>Quantity (ఎన్ని కావాలి):</label>
+        <input type="number" id="qty" value="1">
+    </div>
+
+    <button class="btn-send" onclick="sendWhatsApp()">WhatsApp లో ఆర్డర్ పంపండి</button>
+
+    <div class="payment">
+        <p style="margin:0; font-weight:bold; color:blue;">Payment Details</p>
+        <p style="margin:5px 0;">UPI ID: <b>9642162599@ybl</b></p>
+        <p style="font-size:0.75rem; color:#666;">పేమెంట్ చేసాక స్క్రీన్ షాట్ వాట్సాప్ లో పంపండి.</p>
+    </div>
+</div>
+
+<div class="footer">
+    <b>CVK ENTERPRISE | GSTIN: 37ADSPN1867H1ZY</b><br>
+    📞 9642162599 | Delivery: All over AP
+</div>
+
+<script>
+function sendWhatsApp() {
+    const name = document.getElementById('name').value;
+    const mobile = document.getElementById('mobile').value;
+    const product = document.getElementById('product').value;
+    const qty = document.getElementById('qty').value;
+
+    if (!name || !product) {
+        alert("దయచేసి పేరు మరియు ప్రోడక్ట్ వివరాలు నింపండి!");
+        return;
     }
 
     // మెసేజ్ ఫార్మాట్
-    const msg = `*CVK Enterprise - New Order*%0A%0A*Name:* ${name}%0A*Mobile:* ${mobile}%0A%0A*Products:*%0A${productListText}`;
-    
-    // ముఖ్యం: ఇక్కడ wa.me వాడండి
+    const msg = `*CVK Enterprise - New Order*%0A` +
+                `--------------------------%0A` +
+                `*Name:* ${name}%0A` +
+                `*Mobile:* ${mobile}%0A` +
+                `*Order:* ${product} (${qty} Nos)%0A` +
+                `--------------------------`;
+
     const whatsappUrl = `https://wa.me/919642162599?text=${msg}`;
     
-    // కొత్త విండోలో ఓపెన్ చేయడం
-    window.open(whatsappUrl, '_blank');
+    // App Inventor WebViewer లో లింక్ ఓపెన్ చేయడానికి
+    window.location.href = whatsappUrl;
 }
-
-<section>
-  <h3>Payment Details</h3>
-  <p><b>UPI ID:</b> <span style="color: green; font-weight: bold;">9642162599@ybl</span></p>
-  <p style="color: red;">Payment చేసిన తర్వాత Screenshot WhatsApp లో పంపండి.</p>
-</section>
-
-<footer>
-  <p><b>CVK ENTERPRISE</b> | GSTIN: 37ADSPN1867H1ZY</p>
-  <p>📞 9642162599 | Delivery: All over AP</p>
-</footer>
-
-<script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
-  const MY_WA_NUMBER = "919642162599";
-  let allData = [];
-  let productCount = 1;
-
-  // Load Stock Data
-  fetch(API_URL).then(res => res.json()).then(data => {
-      allData = data;
-      renderTable("");
-  }).catch(err => console.log("Error loading stock:", err));
-
-  function renderTable(filter) {
-    const tbody = document.getElementById("stockTable");
-    tbody.innerHTML = "";
-    allData.forEach(item => {
-      if (filter && !item.ProductName.toLowerCase().includes(filter.toLowerCase())) return;
-      tbody.innerHTML += `<tr>
-        <td>${item.ProductName}</td>
-        <td>${item.Stock}</td>
-        <td><button class="btn-wa" onclick="quickAdd('${item.ProductName}')" style="font-size:12px; padding:5px;">Select</button></td>
-      </tr>`;
-    });
-  }
-
-  document.getElementById("search").addEventListener("input", e => renderTable(e.target.value));
-
-  // మల్టిపుల్ ప్రొడక్ట్స్ కోసం కొత్త ఫీల్డ్ యాడ్ చేయడం
-  function addNewProductField() {
-    productCount++;
-    const container = document.getElementById('product-container');
-    const newDiv = document.createElement('div');
-    newDiv.className = 'product-entry';
-    newDiv.innerHTML = `
-      <input type="text" name="Product_${productCount}" class="pName" placeholder="Product Name" required>
-      <input type="number" name="Qty_${productCount}" class="pQty" placeholder="Qty" required style="width: 80px;">
-    `;
-    container.appendChild(newDiv);
-  }
-
-  // Stock table నుండి డైరెక్ట్ గా యాడ్ చేయడానికి
-  function quickAdd(name) {
-    const names = document.getElementsByClassName('pName');
-    const lastField = names[names.length - 1];
-    if(lastField.value === "") {
-        lastField.value = name;
-    } else {
-        addNewProductField();
-        document.getElementsByClassName('pName')[productCount-1].value = name;
-    }
-    window.location.hash = "orderForm"; 
-  }
-
-  // WhatsApp Message Formatting
-  function sendToWhatsApp() {
-    const name = document.getElementById('custName').value;
-    const mobile = document.getElementById('custMobile').value;
-    const productNames = document.getElementsByClassName('pName');
-    const productQtys = document.getElementsByClassName('pQty');
-    
-    if(!name || !mobile || productNames[0].value === "") {
-        alert("దయచేసి పేరు మరియు కనీసం ఒక ప్రొడక్ట్ వివరాలు నింపండి");
-        return;
-    }
-
-    let productListText = "";
-    for(let i=0; i < productNames.length; i++) {
-        if(productNames[i].value !== "") {
-            productListText += `${i+1}. ${productNames[i].value} - (${productQtys[i].value})%0A`;
-        }
-    }
-
-    const msg = `*CVK Enterprise - New Order*%0A%0A*Name:* ${name}%0A*Mobile:* ${mobile}%0A%0A*Products:*%0A${productListText}`;
-    window.open(`https://wa.me/${MY_WA_NUMBER}?text=${msg}`, '_blank');
-  }
 </script>
 
 </body>
