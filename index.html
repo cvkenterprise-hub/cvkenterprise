@@ -3,111 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVK ENTERPRISE Order Form</title>
+    <title>CVK ENTERPRISE - Premium Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f0f2f5; padding: 15px; }
-        .card { background: white; padding: 20px; border-radius: 12px; max-width: 600px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .header { text-align: center; border-bottom: 2px solid #FFC107; padding-bottom: 10px; }
-        .logo { width: 80px; height: 80px; border-radius: 50%; }
+        :root { --main: #0b5345; --accent: #f1c40f; --text: #2c3e50; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; background: #f4f7f6; color: var(--text); }
         
-        /* Table Style for Stock */
-        .stock-container { margin-top: 20px; overflow-x: auto; max-height: 300px; }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        th { background: #075E54; color: white; padding: 10px; position: sticky; top: 0; }
-        td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
-        
-        .search-box { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #075E54; border-radius: 8px; box-sizing: border-box; }
-        .order-btn { background-color: #25D366; color: white; padding: 15px; border: none; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        /* Navbar */
+        .navbar { background: var(--main); padding: 15px; text-align: center; color: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .navbar img { width: 50px; vertical-align: middle; border-radius: 50%; background: white; padding: 2px; }
+        .navbar h1 { display: inline; font-size: 22px; margin-left: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Banner & About */
+        .hero { background: white; padding: 30px 20px; text-align: center; border-bottom: 5px solid var(--accent); }
+        .hero p { max-width: 600px; margin: 15px auto; line-height: 1.6; font-size: 15px; color: #555; }
+
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+
+        /* Search Bar */
+        .search-container { margin-bottom: 30px; }
+        #searchInput { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 30px; font-size: 16px; outline: none; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        #searchInput:focus { border-color: var(--main); }
+
+        /* Product Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .p-card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; border: 1px solid #eee; position: relative; overflow: hidden; }
+        .p-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .p-card h3 { margin: 0 0 10px 0; color: var(--main); font-size: 17px; }
+        .p-card .price { font-size: 20px; font-weight: bold; color: #d35400; margin: 10px 0; }
+        .p-card .details { font-size: 13px; color: #7f8c8d; height: 40px; overflow: hidden; }
+        .buy-btn { background: var(--main); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .buy-btn:hover { background: #145a32; }
+
+        /* Footer */
+        footer { background: #2c3e50; color: white; padding: 40px 20px; text-align: center; margin-top: 50px; }
+        .footer-content { max-width: 800px; margin: auto; }
+        .footer-grid { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; }
+        .footer-item { text-align: left; min-width: 200px; }
+        .footer-bottom { border-top: 1px solid #455a64; padding-top: 20px; font-size: 13px; color: #bdc3c7; }
+
+        #loading { text-align: center; font-size: 20px; padding: 50px; color: var(--main); }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <div class="header">
-        <img src="https://raw.githubusercontent.com/cvkenterprise-hub/cvkenterprise/main/logo.png" class="logo">
-        <h2>CVK ENTERPRISE</h2>
-        <p style="font-size: 12px;">గత 2.5 సంవత్సరాలుగా విశాఖపట్నంలో అత్యుత్తమ సేవలు</p>
-    </div>
-
-    <h3>📦 Live Stock (A to E Columns)</h3>
-    <input type="text" id="search" class="search-box" placeholder="వెతకండి (Product, MRP, Details)..." onkeyup="filterData()">
-    
-    <div id="loading" style="text-align:center;">డేటా లోడ్ అవుతోంది...</div>
-    
-    <div class="stock-container">
-        <table id="stockTable" style="display:none;">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>MRP</th>
-                    <th>Details</th>
-                </tr>
-            </thead>
-            <tbody id="stockBody"></tbody>
-        </table>
-    </div>
-
-    <hr>
-    
-    <h3>🛒 ఆర్డర్ ఫామ్</h3>
-    <input type="text" id="custName" placeholder="మీ పేరు" style="width:100%; padding:10px; margin-bottom:10px;">
-    <input list="productList" id="selectedProd" placeholder="ప్రోడక్ట్ ఎంచుకోండి" style="width:100%; padding:10px; margin-bottom:10px;">
-    <datalist id="productList"></datalist>
-    <input type="number" id="qty" value="1" style="width:100%; padding:10px; margin-bottom:10px;">
-
-    <button class="order-btn" onclick="sendToWhatsApp()">WhatsApp లో ఆర్డర్ పంపండి</button>
+<div class="navbar">
+    <img src="https://raw.githubusercontent.com/cvkenterprise-hub/cvkenterprise/main/logo.png" alt="Logo">
+    <h1>CVK ENTERPRISE</h1>
 </div>
 
-<script>
-    // మీ కొత్త Web App URL ఇక్కడ పెట్టండి
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec";
+<div class="hero">
+    <h2 style="color: var(--main);">Quality Spare Parts Since 2.5 Years</h2>
+    <p>మేము విశాఖపట్నంలో నాణ్యమైన ఆటోమొబైల్ విడిభాగాలను సరసమైన ధరలకు అందిస్తున్నాము. కస్టమర్ల నమ్మకమే మా బలం. మీ అవసరానికి తగ్గట్టుగా ప్రత్యేకమైన పార్ట్స్ కూడా తెప్పించి ఇవ్వగలము.</p>
+</div>
 
-    async function loadStock() {
+<div class="container">
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for products (e.g. Spark Plug, Disc Pad)..." onkeyup="filterProducts()">
+    </div>
+
+    <div id="loading"><i class="fas fa-spinner fa-spin"></i> స్టాక్ వివరాలు లోడ్ అవుతున్నాయి...</div>
+    <div id="productGrid" class="grid"></div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-item">
+                <h4 style="color: var(--accent);">Contact Us</h4>
+                <p><i class="fas fa-phone"></i> 9642162599</p>
+                <p><i class="fas fa-envelope"></i> cvkenterprise.ho@gmail.com</p>
+            </div>
+            <div class="footer-item">
+                <h4 style="color: var(--accent);">Location</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Visakhapatnam, AP</p>
+                <p><i class="fas fa-truck"></i> Delivery All Over AP</p>
+            </div>
+            <div class="footer-item">
+                <h4 style="color: var(--accent);">Business Info</h4>
+                <p>GSTIN: 37ADSPN1867H1ZY</p>
+                <p>Payment: 9642162599@ybl</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 CVK ENTERPRISE. All Rights Reserved. | Designed for Quality.
+        </div>
+    </div>
+</footer>
+
+<script>
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbyN8pDgUarI6fxJHckYLbkHr3wxqC6GgOiGbrN105lolx7AqPjW0VvQljIF-VBN1qM/exec";
+
+    async function loadProducts() {
         try {
             const res = await fetch(scriptUrl);
             const data = await res.json();
-            let tableHtml = "";
-            let optionsHtml = "";
-
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = "";
+            
             data.forEach(item => {
-                tableHtml += `<tr>
-                    <td><b>${item.ProductName}</b><br><small>${item.Description || ''}</small></td>
-                    <td>${item.Mrp || '-'}</td>
-                    <td>${item.Details || '-'}</td>
-                </tr>`;
-                optionsHtml += `<option value="${item.ProductName}">`;
+                const card = document.createElement('div');
+                card.className = 'p-card';
+                card.innerHTML = `
+                    <h3>${item.name}</h3>
+                    <p class="details">${item.desc || 'No description available'}</p>
+                    <div class="price">MRP: ₹${item.mrp || 'Contact for Price'}</div>
+                    <p style="font-size:12px; color:#27ae60;"><b>Details:</b> ${item.details || '-'}</p>
+                    <button class="buy-btn" onclick="orderNow('${item.name}')">
+                        <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                    </button>
+                `;
+                grid.appendChild(card);
             });
 
-            document.getElementById('stockBody').innerHTML = tableHtml;
-            document.getElementById('productList').innerHTML = optionsHtml;
             document.getElementById('loading').style.display = 'none';
-            document.getElementById('stockTable').style.display = 'table';
         } catch (error) {
-            document.getElementById('loading').innerHTML = "డేటా లోడ్ చేయడంలో లోపం జరిగింది";
+            document.getElementById('loading').innerHTML = "డేటా లోడ్ అవ్వలేదు. దయచేసి ఇంటర్నెట్ సరిచూసుకోండి.";
         }
     }
 
-    function filterData() {
-        let input = document.getElementById('search').value.toUpperCase();
-        let tr = document.getElementById('stockTable').getElementsByTagName('tr');
-        for (let i = 1; i < tr.length; i++) {
-            tr[i].style.display = tr[i].innerText.toUpperCase().includes(input) ? "" : "none";
+    function filterProducts() {
+        const input = document.getElementById('searchInput').value.toUpperCase();
+        const cards = document.getElementsByClassName('p-card');
+        for (let i = 0; i < cards.length; i++) {
+            const title = cards[i].getElementsByTagName('h3')[0].innerText;
+            cards[i].style.display = title.toUpperCase().includes(input) ? "" : "none";
         }
     }
 
-    function sendToWhatsApp() {
-        const name = document.getElementById('custName').value;
-        const prod = document.getElementById('selectedProd').value;
-        const qty = document.getElementById('qty').value;
-        if(!name || !prod) { alert("వివరాలు నింపండి"); return; }
-        
-        const msg = `*New Order - CVK Enterprise*\nName: ${name}\nProduct: ${prod}\nQty: ${qty}`;
-        // Net::ERR_UNKNOWN_URL_SCHEME నివారించడానికి https://wa.me/ వాడుతున్నాను
+    function orderNow(pName) {
+        const msg = `*New Order Request*\nProduct: ${pName}\nStore: CVK Enterprise`;
         window.location.href = `https://wa.me/919642162599?text=${encodeURIComponent(msg)}`;
     }
 
-    window.onload = loadStock;
+    window.onload = loadProducts;
 </script>
-
 </body>
 </html>
