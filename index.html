@@ -2,178 +2,129 @@
 <html lang="te">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CVK ENTERPRISE - Official Order Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVK ENTERPRISE - Live Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary-color: #075E54; --secondary-color: #25D366; --accent-color: #34b7f1; --bg-color: #f0f2f5; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background-color: var(--bg-color); color: #333; }
+        :root { --primary: #075E54; --secondary: #25D366; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); }
+        .header { background: white; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--primary); }
+        .container { max-width: 550px; margin: 20px auto; padding: 0 15px; }
+        .card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         
-        /* Header & Logo */
-        .header { background: white; padding: 25px 15px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .logo { width: 110px; height: 110px; border-radius: 50%; border: 4px solid var(--primary-color); object-fit: cover; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-        .header h1 { margin: 5px 0; color: var(--primary-color); font-size: 1.6rem; letter-spacing: 1px; }
-
-        /* About Section */
-        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
-        .section-card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .about-text { font-size: 0.95rem; line-height: 1.6; color: #444; border-left: 5px solid var(--primary-color); padding-left: 15px; }
-
-        /* Inventory Table */
-        h3 { color: var(--primary-color); border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; display: flex; align-items: center; }
-        h3 i { margin-right: 10px; }
-        .stock-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
-        .stock-table th { background: #f8f9fa; text-align: left; padding: 10px; border-bottom: 2px solid #eee; }
+        .about-text { font-size: 0.9rem; border-left: 4px solid var(--primary); padding-left: 15px; color: #444; }
+        
+        /* Table Style */
+        .stock-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px; }
+        .stock-table th { background: #f8f9fa; padding: 10px; text-align: left; border-bottom: 2px solid #eee; }
         .stock-table td { padding: 10px; border-bottom: 1px solid #eee; }
-        .in-stock { color: green; font-weight: bold; }
 
-        /* Order Form */
-        label { font-weight: 600; display: block; margin-top: 15px; font-size: 0.9rem; }
-        input, select { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem; transition: 0.3s; }
-        input:focus { border-color: var(--primary-color); outline: none; }
+        input, select { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        .btn { flex: 1; padding: 15px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn-wa { background: var(--secondary); }
+        .btn-mail { background: #EA4335; }
         
-        .order-row { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px solid #eee; position: relative; }
-        .btn-add { background: var(--accent-color); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 15px; }
-        
-        /* Action Buttons */
-        .btn-wa { background: var(--secondary-color); color: white; border: none; padding: 16px; width: 100%; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 20px; display: flex; align-items: center; justify-content: center; }
-        .btn-wa i { margin-right: 10px; font-size: 1.3rem; }
-
-        .payment-card { background: #fff5f5; border: 2px dashed #ff4d4d; padding: 15px; text-align: center; border-radius: 10px; }
-        .footer { text-align: center; padding: 30px 15px; background: #333; color: #ccc; font-size: 0.8rem; margin-top: 30px; border-radius: 20px 20px 0 0; }
+        #loading { text-align: center; color: var(--primary); font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <img src="https://raw.githubusercontent.com/మీ_యూజర్_నేమ్/మీ_రిపో/main/logo.jpg" alt="CVK Logo" class="logo">
-    <h1>CVK ENTERPRISE</h1>
-    <p style="color:#666; font-size: 0.85rem;">Professional Automobile Spare Parts Solutions</p>
+    <img src="https://raw.githubusercontent.com/మీ_యూజర్_నేమ్/మీ_రిపో/main/logo.jpg" class="logo" id="mainLogo">
+    <h2 style="margin:10px 0; color:var(--primary);">CVK ENTERPRISE</h2>
 </div>
 
 <div class="container">
-    <div class="section-card">
-        <h3><i class="fas fa-info-circle"></i> మా గురించి (About Us)</h3>
+    <div class="card">
         <div class="about-text">
-            <b>CVK ఎంటర్ప్రైజ్</b> గత 2.5 సంవత్సరాలుగా విశాఖపట్నంలో అత్యుత్తమ సేవలు అందిస్తోంది. మేము నాణ్యమైన ఉత్పత్తులను అత్యంత సరసమైన ధరలకే కస్టమర్లకు అందిస్తున్నాము. మన వద్ద అన్ని ప్రముఖ కంపెనీల స్పేర్ పార్ట్స్ లభించును మరియు వినియోగదారుల కోరిక మేరకు ప్రత్యేకంగా తెప్పించబడును.
+            <b>CVK ఎంటర్ప్రైజ్:</b> గత 2.5 సంవత్సరాలుగా విశాఖపట్నంలో అత్యుత్తమ సేవలు అందిస్తోంది. కస్టమర్ల కోరిక మేరకు నాణ్యమైన స్పేర్ పార్ట్స్ తెప్పించబడును.
         </div>
     </div>
 
-    <div class="section-card">
-        <h3><i class="fas fa-boxes"></i> లభించే ఉత్పత్తులు (Stock List)</h3>
-        <div style="overflow-x:auto;">
-            <table class="stock-table">
-                <thead>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Category</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="inventory-body">
-                    <tr><td>TIMING CHAIN</td><td>Engine</td><td class="in-stock">Available</td></tr>
-                    <tr><td>SPARK PLUG</td><td>Electrical</td><td class="in-stock">Available</td></tr>
-                    <tr><td>BRAKE PADS</td><td>Braking</td><td class="in-stock">Available</td></tr>
-                    <tr><td>ENGINE OIL</td><td>Lubricants</td><td class="in-stock">Available</td></tr>
-                    <tr><td>CLUTCH PLATES</td><td>Transmission</td><td class="in-stock">Available</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <p style="font-size: 0.75rem; color: #888; margin-top: 10px;">* పైన లేని ఐటమ్స్ కావాలంటే కింద ఆర్డర్ ఫామ్‌లో టైప్ చేయండి.</p>
+    <div class="card">
+        <h3><i class="fas fa-list"></i> ప్రస్తుత స్టాక్ (Live Stock)</h3>
+        <div id="loading">స్టాక్ లిస్ట్ లోడ్ అవుతోంది...</div>
+        <table class="stock-table" id="stockTable" style="display:none;">
+            <thead><tr><th>Product Name</th><th>Category</th></tr></thead>
+            <tbody id="inventoryBody"></tbody>
+        </table>
     </div>
 
-    <div class="section-card">
-        <h3><i class="fas fa-shopping-cart"></i> ఆర్డర్ చేయండి (Order Form)</h3>
-        <label>కస్టమర్ పేరు (Full Name):</label>
-        <input type="text" id="custName" placeholder="మీ పేరును ఇక్కడ రాయండి">
+    <div class="card">
+        <h3><i class="fas fa-shopping-cart"></i> ఆర్డర్ ఫామ్</h3>
+        <label>పేరు:</label>
+        <input type="text" id="custName" placeholder="మీ పేరు">
+        <label>ఫోన్:</label>
+        <input type="tel" id="custMobile" placeholder="మొబైల్ నంబర్">
         
-        <label>మొబైల్ నంబర్ (Mobile):</label>
-        <input type="tel" id="custMobile" placeholder="మీ ఫోన్ నంబర్">
-
         <div id="orderItems">
-            <div class="order-row">
-                <label>ప్రోడక్ట్ పేరు:</label>
-                <input list="spare-parts" class="p-name" placeholder="టైప్ చేయండి లేదా సెలెక్ట్ చేయండి...">
-                <datalist id="spare-parts">
-                    <option value="TIMING CHAIN">
-                    <option value="SPARK PLUG">
-                    <option value="BRAKE PADS">
-                    <option value="ENGINE OIL">
-                    <option value="CLUTCH PLATES">
-                    </datalist>
-                
-                <label>క్వాంటిటీ (Qty):</label>
-                <input type="number" class="p-qty" value="1" min="1">
+            <div style="margin-top:15px; padding:10px; background:#f9f9f9; border-radius:8px;">
+                <label>ప్రోడక్ట్:</label>
+                <input list="live-products" id="p1" placeholder="వెతకండి...">
+                <datalist id="live-products"></datalist>
+                <label>క్వాంటిటీ:</label>
+                <input type="number" id="q1" value="1" min="1">
             </div>
         </div>
 
-        <button class="btn-add" onclick="addItem()"><i class="fas fa-plus"></i> మరొక ఐటమ్ యాడ్ చేయండి</button>
-
-        <button class="btn-wa" onclick="sendToWhatsApp()">
-            <i class="fab fa-whatsapp"></i> WhatsApp ద్వారా ఆర్డర్ పంపండి
-        </button>
+        <div class="btn-group">
+            <button class="btn btn-wa" onclick="send('WA')"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+            <button class="btn btn-mail" onclick="send('MAIL')"><i class="fas fa-envelope"></i> Email</button>
+        </div>
     </div>
-
-    <div class="payment-card">
-        <h4 style="margin:0; color:#d93025;"><i class="fas fa-university"></i> Payment Details</h4>
-        <p style="margin:10px 0; font-size:1.2rem; letter-spacing: 1px;">UPI ID: <b>9642162599@ybl</b></p>
-        <p style="font-size: 0.8rem; color: #555;">పేమెంట్ చేసిన తర్వాత స్క్రీన్ షాట్ తప్పక వాట్సాప్ లో పంపండి.</p>
-    </div>
-</div>
-
-<div class="footer">
-    <p><b>CVK ENTERPRISE - VISAKHAPATNAM</b></p>
-    <p>GSTIN: 37ADSPN1867H1ZY | 📞 9642162599</p>
-    <p>© 2024 All Rights Reserved. Delivery available across AP.</p>
 </div>
 
 <script>
-    // కొత్త ఐటమ్ ఫీల్డ్స్ యాడ్ చేయడం
-    function addItem() {
-        const itemContainer = document.getElementById('orderItems');
-        const newRow = document.createElement('div');
-        newRow.className = 'order-row';
-        newRow.innerHTML = `
-            <hr style="border:0; border-top:1px solid #ddd; margin:15px 0;">
-            <label>ప్రోడక్ట్ పేరు:</label>
-            <input list="spare-parts" class="p-name" placeholder="టైప్ చేయండి...">
-            <label>క్వాంటిటీ (Qty):</label>
-            <input type="number" class="p-qty" value="1" min="1">
-        `;
-        itemContainer.appendChild(newRow);
+    // 1. మీ Google Sheet ID ఇక్కడ మార్చండి
+    const sheetId = 'https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec'; 
+    const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
+
+    async function loadStock() {
+        try {
+            const response = await fetch(sheetUrl);
+            const data = await response.text();
+            const rows = data.split('\n').slice(1); // Header వదిలేసి
+            
+            let tableHtml = "";
+            let dataListHtml = "";
+
+            rows.forEach(row => {
+                const cols = row.split('","').map(c => c.replace(/"/g, ''));
+                if (cols[0]) {
+                    tableHtml += `<tr><td>${cols[0]}</td><td>${cols[1] || '-'}</td></tr>`;
+                    dataListHtml += `<option value="${cols[0]}">`;
+                }
+            });
+
+            document.getElementById('inventoryBody').innerHTML = tableHtml;
+            document.getElementById('live-products').innerHTML = dataListHtml;
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('stockTable').style.display = 'table';
+        } catch (e) {
+            document.getElementById('loading').innerText = "లిస్ట్ లోడ్ చేయడంలో లోపం జరిగింది.";
+        }
     }
 
-    // వాట్సాప్ మెసేజ్ పంపడం
-    function sendToWhatsApp() {
-        const name = document.getElementById('custName').value.trim();
-        const mobile = document.getElementById('custMobile').value.trim();
-        const productNames = document.getElementsByClassName('p-name');
-        const productQtys = document.getElementsByClassName('p-qty');
+    function send(type) {
+        const name = document.getElementById('custName').value;
+        const mobile = document.getElementById('custMobile').value;
+        const prod = document.getElementById('p1').value;
+        const qty = document.getElementById('q1').value;
 
-        if (!name || !productNames[0].value) {
-            alert("దయచేసి మీ పేరు మరియు కనీసం ఒక ప్రోడక్ట్ వివరాలు నింపండి.");
-            return;
+        if (!name || !prod) { alert("వివరాలు నింపండి"); return; }
+
+        const msg = `*CVK Order*\nName: ${name}\nMobile: ${mobile}\nItem: ${prod} (${qty})`;
+
+        if (type === 'WA') {
+            window.location.href = `https://api.whatsapp.com/send?phone=919642162599&text=${encodeURIComponent(msg)}`;
+        } else {
+            window.location.href = `mailto:cvkenterprise@gmail.com?subject=New Order&body=${encodeURIComponent(msg)}`;
         }
-
-        let orderList = "";
-        for (let i = 0; i < productNames.length; i++) {
-            if (productNames[i].value) {
-                orderList += `${i + 1}. ${productNames[i].value} - ${productQtys[i].value} Qty\n`;
-            }
-        }
-
-        const finalMessage = `*CVK ENTERPRISE - NEW ORDER*\n` +
-                             `--------------------------\n` +
-                             `*Name:* ${name}\n` +
-                             `*Mobile:* ${mobile}\n\n` +
-                             `*Items:*\n${orderList}\n` +
-                             `--------------------------\n` +
-                             `_Sent via CVK Mobile Portal_`;
-
-        const waLink = "https://api.whatsapp.com/send?phone=919642162599&text=" + encodeURIComponent(finalMessage);
-        window.location.href = waLink;
     }
+
+    window.onload = loadStock;
 </script>
-
 </body>
 </html>
