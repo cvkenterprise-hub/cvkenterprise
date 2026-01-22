@@ -1,51 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="te">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CVK ENTERPRISE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --main: #0b5345; --accent: #f1c40f; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f7f6; }
-        .nav { background: var(--main); color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; }
-        .container { padding: 15px; max-width: 800px; margin: auto; }
-        .card { background: white; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-left: 5px solid var(--main); position: relative; }
-        .discount-tag { position: absolute; top: 10px; right: 10px; background: #27ae60; color: white; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: bold; }
-        .name { color: var(--main); font-size: 18px; font-weight: bold; margin-bottom: 5px; }
-        .desc { font-size: 13px; color: #666; margin-bottom: 10px; }
-        .price { font-size: 20px; font-weight: bold; color: #d35400; margin: 10px 0; }
-        .info { font-size: 12px; background: #f9f9f9; padding: 8px; border-radius: 5px; color: #444; border: 1px dashed #ccc; }
-        .btn { background: #25D366; color: white; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; display: block; margin-top: 15px; font-weight: bold; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f0f2f5; color: #333; }
+        .header { background: #0b5345; color: white; padding: 20px; text-align: center; font-size: 22px; font-weight: bold; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .container { padding: 15px; max-width: 600px; margin: auto; }
+        
+        /* Card Design */
+        .product-card { background: white; border-radius: 12px; margin-bottom: 20px; padding: 15px; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
+        .discount-badge { position: absolute; top: 12px; right: 12px; background: #27ae60; color: white; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: bold; }
+        
+        .p-name { font-size: 19px; color: #0b5345; font-weight: bold; margin-bottom: 5px; display: block; }
+        .p-desc { font-size: 13px; color: #666; line-height: 1.4; margin-bottom: 10px; }
+        .p-mrp { font-size: 22px; color: #d35400; font-weight: bold; margin: 10px 0; }
+        .p-details { font-size: 12px; background: #f8f9fa; padding: 10px; border-radius: 6px; border-left: 4px solid #f1c40f; color: #444; }
+        
+        .buy-btn { background: #25D366; color: white; text-align: center; padding: 14px; border-radius: 10px; text-decoration: none; display: block; margin-top: 15px; font-weight: bold; font-size: 16px; border: none; width: 100%; cursor: pointer; }
+        #loading { text-align: center; padding: 50px; font-weight: bold; color: #0b5345; }
     </style>
 </head>
 <body>
-    <div class="nav"><b>CVK ENTERPRISE</b></div>
-    <div class="container" id="catalog">
-        <p style="text-align:center;">లోడ్ అవుతోంది...</p>
-    </div>
 
-    <script>
-        const scriptUrl = "https://script.google.com/macros/s/AKfycbyQTS_LL-cwOcL0uFe7caSueu90-37hP3_nrB0aze8LiULMgzt2oK6VRC96HzsrohO3/exec";
+<div class="header">CVK ENTERPRISE</div>
 
-        async function loadData() {
-            try {
-                const res = await fetch(scriptUrl);
-                const data = await res.json();
-                const catalog = document.getElementById('catalog');
-                catalog.innerHTML = data.map(i => `
-                    <div class="card">
-                        ${i.discount ? `<div class="discount-tag">${i.discount} OFF</div>` : ''}
-                        <div class="name">${i.name}</div>
-                        <div class="desc">${i.discription || ''}</div>
-                        <div class="price">MRP: ${i.mrp || '0'}</div>
-                        <div class="info"><b>Details:</b> ${i.details || '-'}</div>
-                        <a href="https://api.whatsapp.com/send?phone=919642162599&text=Order: ${encodeURIComponent(i.name)}" class="btn">ORDER NOW</a>
-                    </div>
-                `).join('');
-            } catch (e) {
-                document.getElementById('catalog').innerHTML = "డేటా రావట్లేదు!";
-            }
+<div class="container" id="product-list">
+    <div id="loading"><i class="fas fa-spinner fa-spin"></i> స్టాక్ లోడ్ అవుతోంది...</div>
+</div>
+
+<script>
+    // మీ ఖచ్చితమైన Apps Script URL
+    const apiURL = "https://script.google.com/macros/s/AKfycbyQTS_LL-cwOcL0uFe7caSueu90-37hP3_nrB0aze8LiULMgzt2oK6VRC96HzsrohO3/exec";
+
+    async function loadItems() {
+        try {
+            const response = await fetch(apiURL);
+            const items = await response.json();
+            const listContainer = document.getElementById('product-list');
+            listContainer.innerHTML = "";
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                // Discount ఉంటేనే చూపిస్తుంది
+                const discTag = item.discount ? `<div class="discount-badge">${item.discount} OFF</div>` : '';
+
+                card.innerHTML = `
+                    ${discTag}
+                    <span class="p-name">${item.name}</span>
+                    <div class="p-desc">${item.discription || 'నాణ్యమైన స్పేర్ పార్ట్స్'}</div>
+                    <div class="p-mrp">MRP: ${item.mrp || '0'}</div>
+                    <div class="p-details"><b>వివరాలు:</b> ${item.details || '-'}</div>
+                    <a href="https://api.whatsapp.com/send?phone=919642162599&text=Order: ${encodeURIComponent(item.name)}" class="buy-btn">
+                        <i class="fab fa-whatsapp"></i> వాట్సాప్‌లో ఆర్డర్ చేయండి
+                    </a>
+                `;
+                listContainer.appendChild(card);
+            });
+        } catch (error) {
+            document.getElementById('loading').innerHTML = "డేటా లోడ్ అవ్వలేదు. దయచేసి నెట్ చెక్ చేయండి.";
         }
-        window.onload = loadData;
-    </script>
+    }
+
+    window.onload = loadItems;
+</script>
+
 </body>
 </html>
