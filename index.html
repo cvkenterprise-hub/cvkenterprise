@@ -1,103 +1,48 @@
 <!DOCTYPE html>
-<html lang="te">
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVK ENTERPRISE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --main: #0b5345; --accent: #f1c40f; }
-        body { font-family: sans-serif; margin: 0; background: #f4f7f6; color: #333; }
-        .navbar { background: var(--main); padding: 15px; text-align: center; color: white; position: sticky; top: 0; z-index: 1000; }
-        .navbar img { width: 45px; border-radius: 50%; background: white; padding: 2px; vertical-align: middle; }
-        .container { padding: 15px; }
-        
-        /* Search */
-        #search { width: 100%; padding: 12px; border-radius: 25px; border: 1px solid #ccc; margin-bottom: 20px; box-sizing: border-box; }
-
-        /* Cards */
-        .p-card { background: white; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; border-left: 5px solid var(--main); }
+        body { font-family: sans-serif; margin: 0; background: #f0f2f5; }
+        .nav { background: #0b5345; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; font-weight: bold; }
+        .card { background: white; margin: 12px; padding: 15px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative; border-left: 5px solid #0b5345; }
         .discount { position: absolute; top: 10px; right: 10px; background: #27ae60; color: white; padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; }
-        .p-card h3 { margin: 0 0 5px 0; font-size: 16px; color: var(--main); padding-right: 60px; }
-        .p-card p { margin: 5px 0; font-size: 13px; color: #666; }
-        .price { font-size: 18px; font-weight: bold; color: #d35400; margin: 8px 0; }
-        .details-box { background: #f9f9f9; padding: 8px; border-radius: 5px; font-size: 12px; border: 1px dashed #ddd; margin-top: 10px; }
-        
-        .btn { background: #25D366; color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; margin-top: 10px; display: block; text-align: center; text-decoration: none; }
-        
-        /* Footer */
-        footer { background: #2c3e50; color: white; padding: 25px 15px; text-align: left; font-size: 13px; }
-        .footer-item h4 { color: var(--accent); margin: 0 0 10px 0; }
+        .title { font-size: 16px; color: #0b5345; font-weight: bold; margin-bottom: 5px; }
+        .mrp { font-size: 20px; color: #d35400; font-weight: bold; margin: 10px 0; }
+        .details-box { background: #f9f9f9; padding: 10px; border-radius: 6px; font-size: 12px; color: #555; border: 1px dashed #ddd; }
+        .btn { background: #25D366; color: white; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; display: block; margin-top: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
+    <div class="nav">CVK ENTERPRISE - LIVE STOCK</div>
+    <div id="catalog"></div>
 
-<div class="navbar">
-    <img src="https://raw.githubusercontent.com/cvkenterprise-hub/cvkenterprise/main/logo.png" alt="Logo">
-    <span style="font-weight:bold; margin-left:10px;">CVK ENTERPRISE</span>
-</div>
+    <script>
+        // ఇక్కడ మీ కొత్త Apps Script URL ని పెట్టండి
+        const appUrl = "https://script.google.com/macros/s/AKfycbyQTS_LL-cwOcL0uFe7caSueu90-37hP3_nrB0aze8LiULMgzt2oK6VRC96HzsrohO3/exec";
 
-<div class="container">
-    <input type="text" id="search" placeholder="స్టాక్ సెర్చ్ చేయండి..." onkeyup="filter()">
-    <div id="loading" style="text-align:center;">లోడ్ అవుతోంది...</div>
-    <div id="list"></div>
-</div>
-
-<footer>
-    <div style="margin-bottom: 15px;">
-        <h4>Contact Us</h4>
-        <p>Ph: 9642162599 | Email: cvkenterprise.ho@gmail.com</p>
-    </div>
-    <div style="margin-bottom: 15px;">
-        <h4>Location</h4>
-        <p>Visakhapatnam | Delivery All Over AP</p>
-    </div>
-    <div style="border-top: 1px solid #455a64; padding-top: 10px; font-size: 11px; text-align: center;">
-        &copy; 2024 CVK ENTERPRISE. GST: 37ADSPN1867H1ZY
-    </div>
-</footer>
-
-<script>
-    // కొత్త Deployment URL ఇక్కడ పెట్టండి
-    const url = "https://script.google.com/macros/s/AKfycbyQTS_LL-cwOcL0uFe7caSueu90-37hP3_nrB0aze8LiULMgzt2oK6VRC96HzsrohO3/exec";
-
-    async function loadData() {
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
-            const list = document.getElementById('list');
-            list.innerHTML = "";
-            
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'p-card';
-                const disc = item.discount ? `<div class="discount">${item.discount} Off</div>` : '';
-                
-                card.innerHTML = `
-                    ${disc}
-                    <h3>${item.name}</h3>
-                    <p><i>${item.discription || ''}</i></p>
-                    <div class="price">MRP: ${item.mrp || '0'}</div>
-                    <div class="details-box"><b>Details:</b> ${item.details || '-'}</div>
-                    <a href="https://api.whatsapp.com/send?phone=919642162599&text=Order: ${encodeURIComponent(item.name)}" class="btn">
-                        <i class="fab fa-whatsapp"></i> వాట్సాప్‌లో ఆర్డర్ చేయండి
-                    </a>
-                `;
-                list.appendChild(card);
-            });
-            document.getElementById('loading').style.display = 'none';
-        } catch (e) { document.getElementById('loading').innerText = "ఎర్రర్: డేటా రావట్లేదు!"; }
-    }
-
-    function filter() {
-        let val = document.getElementById('search').value.toUpperCase();
-        let cards = document.getElementsByClassName('p-card');
-        for (let i = 0; i < cards.length; i++) {
-            let txt = cards[i].getElementsByTagName('h3')[0].innerText;
-            cards[i].style.display = txt.toUpperCase().includes(val) ? "" : "none";
+        async function loadData() {
+            try {
+                const res = await fetch(appUrl);
+                const data = await res.json();
+                document.getElementById('catalog').innerHTML = data.map(item => `
+                    <div class="card">
+                        ${item.discount ? `<div class="discount">${item.discount} OFF</div>` : ''}
+                        <div class="title">${item.name}</div>
+                        <p style="font-size:13px; color:#666; margin:5px 0;">${item.discription || ''}</p>
+                        <div class="mrp">MRP: ${item.mrp || '0'}</div>
+                        <div class="details-box"><b>Details:</b> ${item.details || '-'}</div>
+                        <a href="https://api.whatsapp.com/send?phone=919642162599&text=Order Request: ${encodeURIComponent(item.name)}" class="btn">
+                            <i class="fab fa-whatsapp"></i> వాట్సాప్‌లో ఆర్డర్ చేయండి
+                        </a>
+                    </div>
+                `).join('');
+            } catch (e) {
+                document.getElementById('catalog').innerHTML = "<p style='text-align:center; padding:20px;'>డేటా లోడ్ అవ్వట్లేదు. నెట్ ఒకసారి చెక్ చేయండి.</p>";
+            }
         }
-    }
-    window.onload = loadData;
-</script>
+        window.onload = loadData;
+    </script>
 </body>
 </html>
