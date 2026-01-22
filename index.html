@@ -3,128 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVK ENTERPRISE - Live Portal</title>
+    <title>CVK ENTERPRISE - Official Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #075E54; --secondary: #25D366; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); }
+        :root { --primary: #075E54; --secondary: #25D366; --bg: #f0f2f5; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
+        
+        /* Header & Logo */
         .header { background: white; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .logo { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--primary); }
-        .container { max-width: 550px; margin: 20px auto; padding: 0 15px; }
-        .card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; }
         
-        .about-text { font-size: 0.9rem; border-left: 4px solid var(--primary); padding-left: 15px; color: #444; }
+        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+        .card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         
-        /* Table Style */
-        .stock-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px; }
-        .stock-table th { background: #f8f9fa; padding: 10px; text-align: left; border-bottom: 2px solid #eee; }
-        .stock-table td { padding: 10px; border-bottom: 1px solid #eee; }
+        /* About Us Section */
+        .about-text { font-size: 0.95rem; line-height: 1.6; border-left: 5px solid var(--primary); padding-left: 15px; }
 
-        input, select { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        /* Inventory Search */
+        .search-box { position: sticky; top: 10px; z-index: 100; margin-bottom: 15px; }
+        #stockSearch { width: 100%; padding: 12px; border: 2px solid var(--primary); border-radius: 25px; outline: none; }
+
+        /* Stock Table */
+        .table-container { max-height: 300px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th { background: #f8f9fa; position: sticky; top: 0; padding: 10px; text-align: left; border-bottom: 2px solid #eee; }
+        td { padding: 10px; border-bottom: 1px solid #eee; }
+
+        /* Order Form */
+        label { font-weight: bold; display: block; margin-top: 15px; font-size: 0.9rem; }
+        input, select, textarea { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        
         .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        .btn { flex: 1; padding: 15px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn { flex: 1; padding: 15px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; }
         .btn-wa { background: var(--secondary); }
         .btn-mail { background: #EA4335; }
-        
-        #loading { text-align: center; color: var(--primary); font-weight: bold; }
+
+        #loading { text-align: center; padding: 20px; color: var(--primary); font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <img src="https://raw.githubusercontent.com/మీ_యూజర్_నేమ్/మీ_రిపో/main/logo.jpg" class="logo" id="mainLogo">
-    <h2 style="margin:10px 0; color:var(--primary);">CVK ENTERPRISE</h2>
+    <img src="https://raw.githubusercontent.com/cvkenterprise-hub/cvkenterprise/main/logo.png" alt="CVK Logo" class="logo">
+    <h1 style="margin:10px 0; color:var(--primary);">CVK ENTERPRISE</h1>
 </div>
 
 <div class="container">
     <div class="card">
         <div class="about-text">
-            <b>CVK ఎంటర్ప్రైజ్:</b> గత 2.5 సంవత్సరాలుగా విశాఖపట్నంలో అత్యుత్తమ సేవలు అందిస్తోంది. కస్టమర్ల కోరిక మేరకు నాణ్యమైన స్పేర్ పార్ట్స్ తెప్పించబడును.
+            <b>మా గురించి:</b> CVK ఎంటర్ప్రైజ్ గత 2.5 సంవత్సరాలుగా విశాఖపట్నంలో అత్యుత్తమ సేవలు అందిస్తోంది. మేము నాణ్యమైన ఉత్పత్తులను సరసమైన ధరలకే అందిస్తాము. వినియోగదారుల కోరిక మేరకు ప్రత్యేకంగా ఉత్పత్తులు తెప్పించబడును.
         </div>
     </div>
 
     <div class="card">
-        <h3><i class="fas fa-list"></i> ప్రస్తుత స్టాక్ (Live Stock)</h3>
-        <div id="loading">స్టాక్ లిస్ట్ లోడ్ అవుతోంది...</div>
-        <table class="stock-table" id="stockTable" style="display:none;">
-            <thead><tr><th>Product Name</th><th>Category</th></tr></thead>
-            <tbody id="inventoryBody"></tbody>
-        </table>
+        <h3><i class="fas fa-boxes"></i> మా వద్ద ఉన్న ఉత్పత్తులు (Live Stock)</h3>
+        <div class="search-box">
+            <input type="text" id="stockSearch" placeholder="ప్రోడక్ట్ పేరుతో వెతకండి..." onkeyup="filterStock()">
+        </div>
+        <div id="loading">డేటా లోడ్ అవుతోంది...</div>
+        <div class="table-container" id="tableCont" style="display:none;">
+            <table id="stockTable">
+                <thead><tr><th>Product Name</th><th>Details</th></tr></thead>
+                <tbody id="stockBody"></tbody>
+            </table>
+        </div>
     </div>
 
     <div class="card">
         <h3><i class="fas fa-shopping-cart"></i> ఆర్డర్ ఫామ్</h3>
-        <label>పేరు:</label>
-        <input type="text" id="custName" placeholder="మీ పేరు">
-        <label>ఫోన్:</label>
-        <input type="tel" id="custMobile" placeholder="మొబైల్ నంబర్">
+        <label>కస్టమర్ పేరు:</label>
+        <input type="text" id="custName" placeholder="మీ పేరు రాయండి">
         
-        <div id="orderItems">
-            <div style="margin-top:15px; padding:10px; background:#f9f9f9; border-radius:8px;">
-                <label>ప్రోడక్ట్:</label>
-                <input list="live-products" id="p1" placeholder="వెతకండి...">
-                <datalist id="live-products"></datalist>
-                <label>క్వాంటిటీ:</label>
-                <input type="number" id="q1" value="1" min="1">
-            </div>
-        </div>
+        <label>ఫోన్ నంబర్:</label>
+        <input type="tel" id="custMobile" placeholder="మొబైల్ నంబర్">
+
+        <label>ప్రోడక్ట్ సెలెక్ట్ చేయండి (షీట్ నుండి):</label>
+        <input list="sheetProducts" id="selectedProduct" placeholder="వెతకండి...">
+        <datalist id="sheetProducts"></datalist>
+
+        <label>క్వాంటిటీ:</label>
+        <input type="number" id="qty" value="1" min="1">
 
         <div class="btn-group">
-            <button class="btn btn-wa" onclick="send('WA')"><i class="fab fa-whatsapp"></i> WhatsApp</button>
-            <button class="btn btn-mail" onclick="send('MAIL')"><i class="fas fa-envelope"></i> Email</button>
+            <a href="javascript:void(0)" class="btn btn-wa" onclick="sendOrder('WA')"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="javascript:void(0)" class="btn btn-mail" onclick="sendOrder('MAIL')"><i class="fas fa-envelope"></i> Email</a>
         </div>
     </div>
 </div>
 
 <script>
-    // 1. మీ Google Sheet ID ఇక్కడ మార్చండి
-    const sheetId = 'https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOKddsVyaznfJp7MbE7loD2w5XnaNOtJSY6vAmneMRwjEW/exec'; 
-    const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
+    // 1. మీ గూగుల్ స్క్రిప్ట్ URL ఇక్కడ మార్చండి
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbyAvqWNIyBJDKK6E1K51QlOkKddsVyaznfJp7MbE7IoD2w5XnaNO/exec';
 
-    async function loadStock() {
+    async function fetchStock() {
         try {
-            const response = await fetch(sheetUrl);
-            const data = await response.text();
-            const rows = data.split('\n').slice(1); // Header వదిలేసి
-            
-            let tableHtml = "";
-            let dataListHtml = "";
+            const response = await fetch(scriptUrl);
+            const data = await response.json();
+            let tableRows = "";
+            let options = "";
 
-            rows.forEach(row => {
-                const cols = row.split('","').map(c => c.replace(/"/g, ''));
-                if (cols[0]) {
-                    tableHtml += `<tr><td>${cols[0]}</td><td>${cols[1] || '-'}</td></tr>`;
-                    dataListHtml += `<option value="${cols[0]}">`;
-                }
+            data.forEach(item => {
+                tableRows += `<tr><td>${item.ProductName}</td><td>${item.Details || '-'}</td></tr>`;
+                options += `<option value="${item.ProductName}">`;
             });
 
-            document.getElementById('inventoryBody').innerHTML = tableHtml;
-            document.getElementById('live-products').innerHTML = dataListHtml;
+            document.getElementById('stockBody').innerHTML = tableRows;
+            document.getElementById('sheetProducts').innerHTML = options;
             document.getElementById('loading').style.display = 'none';
-            document.getElementById('stockTable').style.display = 'table';
-        } catch (e) {
-            document.getElementById('loading').innerText = "లిస్ట్ లోడ్ చేయడంలో లోపం జరిగింది.";
+            document.getElementById('tableCont').style.display = 'block';
+        } catch (error) {
+            document.getElementById('loading').innerHTML = "డేటా లోడ్ చేయడంలో లోపం జరిగింది.";
         }
     }
 
-    function send(type) {
+    function filterStock() {
+        let input = document.getElementById('stockSearch').value.toUpperCase();
+        let tr = document.getElementById('stockTable').getElementsByTagName('tr');
+        for (let i = 1; i < tr.length; i++) {
+            let td = tr[i].getElementsByTagName('td')[0];
+            if (td) {
+                tr[i].style.display = td.innerText.toUpperCase().indexOf(input) > -1 ? "" : "none";
+            }
+        }
+    }
+
+    function sendOrder(type) {
         const name = document.getElementById('custName').value;
-        const mobile = document.getElementById('custMobile').value;
-        const prod = document.getElementById('p1').value;
-        const qty = document.getElementById('q1').value;
+        const prod = document.getElementById('selectedProduct').value;
+        const qty = document.getElementById('qty').value;
+        
+        if(!name || !prod) { alert("వివరాలు నింపండి!"); return; }
 
-        if (!name || !prod) { alert("వివరాలు నింపండి"); return; }
-
-        const msg = `*CVK Order*\nName: ${name}\nMobile: ${mobile}\nItem: ${prod} (${qty})`;
-
-        if (type === 'WA') {
-            window.location.href = `https://api.whatsapp.com/send?phone=919642162599&text=${encodeURIComponent(msg)}`;
+        const msg = `*CVK Enterprise - New Order*\nName: ${name}\nProduct: ${prod}\nQty: ${qty}`;
+        
+        if(type === 'WA') {
+            window.open(`https://api.whatsapp.com/send?phone=919642162599&text=${encodeURIComponent(msg)}`, '_blank');
         } else {
-            window.location.href = `mailto:cvkenterprise@gmail.com?subject=New Order&body=${encodeURIComponent(msg)}`;
+            window.location.href = `mailto:cvkenterprise.ho@gmail.com?subject=New Order&body=${encodeURIComponent(msg)}`;
         }
     }
 
-    window.onload = loadStock;
+    window.onload = fetchStock;
 </script>
 </body>
 </html>
